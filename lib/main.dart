@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'Widgets/TopBar.dart';
 
 void main() {
+  setup();
   runApp(const MyApp());
+}
+
+void setup() {
+  GetIt getIt = GetIt.instance;
+  getIt.registerSingleton<String>("https://localhost:9090/",
+      signalsReady: true);
 }
 
 class MyApp extends StatelessWidget {
@@ -37,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    GetIt getIt = GetIt.instance;
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: TopBar(),
@@ -53,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text("Test Button"), onPressed: () {}),
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://localhost:9090/image?name=HappyFace.jpg',
+                          getIt<String>() + 'image?name=HappyFace.jpg',
                           headers: {
                             "authorization": "Basic YW5kcmV3OnBhc3N3b3Jk"
                           }),
