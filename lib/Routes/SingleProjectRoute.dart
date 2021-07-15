@@ -3,6 +3,7 @@ import 'package:showcase/Helpers/HttpHelper.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Widgets/AsyncMarkdownDisplay.dart';
 import 'package:showcase/Widgets/Background.dart';
+import 'package:showcase/Widgets/Gallery.dart';
 import 'package:showcase/Widgets/TopBar.dart';
 
 class SingleProjectRoute extends StatelessWidget {
@@ -17,7 +18,13 @@ class SingleProjectRoute extends StatelessWidget {
       appBar: TopBar(),
       body: Background(
           child: Container(
-              child: AsyncMarkdownDisplay(textFuture: markdownFuture))),
+        child: Column(
+          children: [
+            AsyncMarkdownDisplay(textFuture: markdownFuture),
+            Gallery(project: project),
+          ],
+        ),
+      )),
     );
   }
 }

@@ -14,7 +14,7 @@ class AsyncMarkdownDisplay extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               String text = snapshot.data as String;
-              return Markdown(data: text);
+              return Markdown(shrinkWrap: true, data: text);
             } else if (snapshot.hasError) {
               return Text("Error: " + snapshot.error.toString());
             } else {
