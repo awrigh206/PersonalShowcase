@@ -24,30 +24,35 @@ class _ProjectsPageState extends State<ProjectsPage> {
         Background(
           child: Container(
             child: Center(
-                child: FutureBuilder<List<Project>>(
-                    future: projects,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<Project> realProjects =
-                            snapshot.data as List<Project>;
-                        return ListView.builder(
-                            itemCount: realProjects.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(realProjects[index].title),
-                              );
-                            });
-                      } else if (snapshot.hasError) {
-                        return ListTile(
-                          title: Text(snapshot.error.toString()),
-                          subtitle: Text(snapshot.error.runtimeType.toString()),
-                          leading: Icon(Icons.error),
-                        );
-                      } else {
-                        // ignore: prefer_const_constructors
-                        return CircularProgressIndicator();
-                      }
-                    })),
+              child: FutureBuilder<List<Project>>(
+                  future: projects,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Project> realProjects =
+                          snapshot.data as List<Project>;
+                      return ListView.builder(
+                          itemCount: realProjects.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(realProjects[index].title),
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    "https://raw.githubusercontent.com/awrigh206/TestRepo/main/HappyFace.jpg"),
+                              ),
+                              onTap: () {},
+                            );
+                          });
+                    } else if (snapshot.hasError) {
+                      return ListTile(
+                        title: Text(snapshot.error.toString()),
+                        subtitle: Text(snapshot.error.runtimeType.toString()),
+                        leading: Icon(Icons.error),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
+            ),
           ),
         ),
       ]),
