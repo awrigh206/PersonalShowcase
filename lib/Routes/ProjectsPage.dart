@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:showcase/Configuration/Config.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:http/http.dart' as http;
-import 'package:showcase/Routes/SingleProjectRoute.dart';
 import 'package:showcase/Widgets/Background.dart';
+import 'package:showcase/Widgets/ProjectTile.dart';
 import 'package:showcase/Widgets/TopBar.dart';
 
 class ProjectsPage extends StatefulWidget {
@@ -35,35 +35,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       return ListView.builder(
                           itemCount: realProjects.length,
                           itemBuilder: (context, index) {
-                            if (realProjects[index].images.isNotEmpty) {
-                              return ListTile(
-                                title: Text(realProjects[index].title),
-                                leading: CircleAvatar(),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SingleProjectRoute(
-                                                  project:
-                                                      realProjects[index])));
-                                },
-                              );
-                            } else {
-                              return ListTile(
-                                title: Text(realProjects[index].title),
-                                leading: Icon(Icons.image),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SingleProjectRoute(
-                                                  project:
-                                                      realProjects[index])));
-                                },
-                              );
-                            }
+                            return ProjectTile(project: realProjects[index]);
                           });
                     } else if (snapshot.hasError) {
                       return ListTile(
