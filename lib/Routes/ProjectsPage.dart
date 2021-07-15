@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:showcase/Configuration/Config.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:http/http.dart' as http;
+import 'package:showcase/Routes/SingleProjectRoute.dart';
 import 'package:showcase/Widgets/Background.dart';
 import 'package:showcase/Widgets/TopBar.dart';
 
@@ -33,14 +35,35 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       return ListView.builder(
                           itemCount: realProjects.length,
                           itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(realProjects[index].title),
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://raw.githubusercontent.com/awrigh206/TestRepo/main/HappyFace.jpg"),
-                              ),
-                              onTap: () {},
-                            );
+                            if (realProjects[index].images.isNotEmpty) {
+                              return ListTile(
+                                title: Text(realProjects[index].title),
+                                leading: CircleAvatar(),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SingleProjectRoute(
+                                                  project:
+                                                      realProjects[index])));
+                                },
+                              );
+                            } else {
+                              return ListTile(
+                                title: Text(realProjects[index].title),
+                                leading: Icon(Icons.image),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SingleProjectRoute(
+                                                  project:
+                                                      realProjects[index])));
+                                },
+                              );
+                            }
                           });
                     } else if (snapshot.hasError) {
                       return ListTile(
@@ -60,8 +83,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   Future<List<Project>> getProjects() async {
-    var url = Uri.parse(GetIt.I<String>() + 'project');
-    // List<Project> listOfProjects = List.empty();
+    var url = Uri.parse(GetIt.I<Config>().baseUrl + 'project');
     var response = await http.get(
       url,
       headers: {

@@ -1,21 +1,21 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:showcase/Configuration/Config.dart';
 import 'Widgets/TopBar.dart';
 import 'package:http/http.dart' as http;
 
-void main() {
-  setup();
+void main() async {
   runApp(const MyApp());
 }
 
-void setup() {
+Future<void> setup() async {
+  String token = await getToken();
+  Config config = Config("https://localhost:9090/", token);
   GetIt getIt = GetIt.instance;
-  getIt.registerSingleton<String>("https://localhost:9090/",
-      signalsReady: true);
+  getIt.registerSingleton<Config>(config, signalsReady: true);
+  return;
 }
 
 class MyApp extends StatelessWidget {
@@ -48,9 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    GetIt getIt = GetIt.instance;
     getListOfProjects();
-    Future<String> mardownFuture = getMarkdownFromGithub();
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: TopBar(),
@@ -61,16 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: screenSize.width / 18),
               child: Center(
-                child: FutureBuilder(
-                    future: mardownFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        String text = snapshot.data as String;
-                        return Markdown(data: text);
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    }),
+                child: Text('this is the home page'),
               ),
             ),
           ],
@@ -78,20 +67,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> getListOfProjects() async {
-    var response =
-        await http.get(Uri.parse(GetIt.I<String>() + "project/list"), headers: {
+    await setup();
+    var response = await http
+        .get(Uri.parse(GetIt.I<Config>().baseUrl + "project/list"), headers: {
       "Authorization": 'Basic YW5kcmV3OnBhc3N3b3Jk',
     });
     var list = jsonDecode(response.body);
     List<String> stringList = new List<String>.from(list);
     GetIt.I.registerSingleton<List<String>>(stringList, signalsReady: true);
   }
+}
 
-  Future<String> getMarkdownFromGithub() async {
-    String address =
-        "https://raw.githubusercontent.com/awrigh206/TestRepo/main/example.md";
-    var url = Uri.parse(address);
-    var response = await http.get(url);
-    return response.body;
-  }
+Future<String> getToken() async {
+  var response =
+      await http.get(Uri.parse("https://localhost:9090/token"), headers: {
+    "Authorization": 'Basic YW5kcmV3OnBhc3N3b3Jk',
+  });
+  return response.body;
 }

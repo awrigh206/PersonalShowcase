@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:showcase/Helpers/HttpHelper.dart';
 import 'package:showcase/Models/Project.dart';
+import 'package:showcase/Widgets/AsyncMarkdownDisplay.dart';
 import 'package:showcase/Widgets/Background.dart';
 import 'package:showcase/Widgets/TopBar.dart';
 
@@ -9,12 +11,13 @@ class SingleProjectRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<String> markdownFuture =
+        HttpHelper.getMarkdownFromGithub(project.paragraphsOfContent.first);
     return Scaffold(
       appBar: TopBar(),
       body: Background(
           child: Container(
-        child: Text("Hello there, I am "),
-      )),
+              child: AsyncMarkdownDisplay(textFuture: markdownFuture))),
     );
   }
 }
