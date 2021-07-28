@@ -22,7 +22,7 @@ class Gallery extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Image(image: NetworkImage(project.images[index])),
+              child: Image(image: NetworkImage(project.images[index].name)),
             );
           }),
     );

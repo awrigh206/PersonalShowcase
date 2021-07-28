@@ -55,11 +55,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   Future<List<Project>> getProjects() async {
-    var url = Uri.parse(GetIt.I<Config>().baseUrl + 'project');
+    Config config = GetIt.I<Config>();
+    var url = Uri.parse(config.baseUrl + 'project');
     var response = await http.get(
       url,
       headers: {
-        "Authorization": 'Basic YW5kcmV3OnBhc3N3b3Jk',
+        "Authorization": config.auth,
       },
     );
     var list = jsonDecode(response.body) as List;
