@@ -12,19 +12,22 @@ class Gallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20),
-          itemCount: project.images.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image(image: NetworkImage(project.images[index].name)),
-            );
-          }),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 450,
+                childAspectRatio: 1,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15),
+            itemCount: project.images.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Image(image: NetworkImage(project.images[index].name)),
+              );
+            }),
+      ),
     );
   }
 }
