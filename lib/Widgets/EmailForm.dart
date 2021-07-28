@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'package:showcase/Configuration/Config.dart';
+import 'package:showcase/Logic/EmailLogic.dart';
 import 'package:showcase/Models/Email.dart';
 
 class EmailForm extends StatefulWidget {
@@ -23,33 +18,18 @@ class _EmailFormState extends State<EmailForm> {
   TextEditingController bodyTextController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool animate = false;
-  Future<LottieComposition> fetchAnimation() async {
-    var assetData = await rootBundle.load('Assets/sent.json');
-    return await LottieComposition.fromByteData(assetData);
-  }
 
   @override
   void dispose() {
+    emailTextController.dispose();
+    bodyTextController.dispose();
     super.dispose();
-  }
-
-  Future<void> sendEmail() async {
-    Config config = GetIt.I<Config>();
-    Email email = Email(emailTextController.text, bodyTextController.text,
-        DateTime.now().toLocal().toIso8601String());
-    var response = await http.post(
-      Uri.parse(config.baseUrl + 'email'),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": config.auth,
-      },
-      body: jsonEncode(email),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<LottieComposition> animationComposite = fetchAnimation();
+    EmailLogic logic = EmailLogic();
+    Future<LottieComposition> animationComposite = logic.fetchAnimation();
 
     return Form(
       key: formKey,
@@ -127,7 +107,11 @@ class _EmailFormState extends State<EmailForm> {
                     setState(() {
                       animate = true;
                     });
-                    sendEmail();
+                    Email email = Email(
+                        emailTextController.text,
+                        bodyTextController.text,
+                        DateTime.now().toLocal().toIso8601String());
+                    logic.sendEmail(email);
                   }
                 },
                 child: Text('Submit'),
