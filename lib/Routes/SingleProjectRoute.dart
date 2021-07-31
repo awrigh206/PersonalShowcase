@@ -12,8 +12,7 @@ class SingleProjectRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<String> markdownFuture =
-        HttpHelper.getMarkdownFromGithub(project.paragraphsOfContent.first);
+    Future<String> markdownFuture = HttpHelper.getMarkdownFromServer(project);
     return Scaffold(
       appBar: TopBar(),
       body: Background(

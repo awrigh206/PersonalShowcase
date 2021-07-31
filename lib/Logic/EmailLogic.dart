@@ -13,7 +13,7 @@ class EmailLogic {
       Uri.parse(config.baseUrl + 'email'),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": config.auth,
+        'Authorization': config.auth,
       },
       body: jsonEncode(email),
     );
