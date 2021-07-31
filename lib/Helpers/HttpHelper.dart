@@ -6,17 +6,6 @@ import 'package:showcase/Configuration/Config.dart';
 import 'package:showcase/Models/Project.dart';
 
 class HttpHelper {
-  static Future<String> getMarkdownFromGithub(String address) async {
-    var url = Uri.parse(address);
-    var response = await http.get(url, headers: {});
-    var codec = utf8.fuse(base64);
-    String raw = jsonDecode(response.body)['content'];
-    raw = raw.replaceAll('\n', '');
-    print('The raw: ' + raw);
-    var decoded = codec.decode(raw);
-    return decoded;
-  }
-
   static Future<String> getMarkdownFromServer(Project project) async {
     Config config = GetIt.I<Config>();
     var url = Uri.parse(config.baseUrl + 'project/test');
