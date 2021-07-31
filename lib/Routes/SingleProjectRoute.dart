@@ -20,7 +20,15 @@ class SingleProjectRoute extends StatelessWidget {
         child: Column(
           children: [
             AsyncMarkdownDisplay(textFuture: markdownFuture),
-            Gallery(project: project),
+            FutureBuilder(
+                future: markdownFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Gallery(project: project);
+                  } else {
+                    return Container();
+                  }
+                }),
           ],
         ),
       )),

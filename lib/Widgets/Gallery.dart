@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class Gallery extends StatelessWidget {
   const Gallery({
@@ -24,7 +25,14 @@ class Gallery extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Image(image: NetworkImage(project.images[index].name)),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: project.images[index].name,
+                ),
+
+                // Image(
+                //     image: NetworkImage(project.images[index].name),
+                //     semanticLabel: 'Image relevant to the repository'),
               );
             }),
       ),
