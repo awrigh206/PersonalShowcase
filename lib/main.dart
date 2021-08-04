@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Configuration/Config.dart';
-import 'package:showcase/Models/TokenRequest.dart';
 import 'Widgets/EmailForm.dart';
 import 'Widgets/TopBar.dart';
 import 'package:http/http.dart' as http;
@@ -13,9 +12,8 @@ void main() async {
 }
 
 Future<void> setup() async {
-  String token = await getToken();
   Config config =
-      Config("https://localhost:9090/", token, 'Basic YW5kcmV3OnBhc3N3b3Jk');
+      Config("https://51.143.243.36:9090/", 'Basic YW5kcmV3OnBhc3N3b3Jk');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);
@@ -89,15 +87,4 @@ class _MyHomePageState extends State<MyHomePage> {
     List<String> stringList = new List<String>.from(list);
     GetIt.I.registerSingleton<List<String>>(stringList, signalsReady: true);
   }
-}
-
-Future<String> getToken() async {
-  var response = await http.post(Uri.parse("https://localhost:9090/token"),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": 'Basic YW5kcmV3OnBhc3N3b3Jk',
-      },
-      body: jsonEncode(
-          new TokenRequest('PUfKmpBmRbl53Az1jpNiICPWpJHstm1k').toJson()));
-  return response.body;
 }

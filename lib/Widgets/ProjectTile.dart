@@ -27,7 +27,7 @@ class ProjectTile extends StatelessWidget {
       return ListTile(
         title: Text(project.title),
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(project.images.first.name),
+          backgroundImage: NetworkImage(project.images.first.route),
         ),
         onTap: () {
           Navigator.push(

@@ -7,7 +7,7 @@ import 'package:showcase/Models/Project.dart';
 class HttpHelper {
   static Future<String> getMarkdownFromServer(Project project) async {
     Config config = GetIt.I<Config>();
-    var url = Uri.parse(config.baseUrl + 'project/test');
+    var url = Uri.parse(config.baseUrl + 'project/mark');
     var response = await http.post(url,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -16,7 +16,6 @@ class HttpHelper {
         body: jsonEncode(project.toJson()));
     var codec = utf8.fuse(base64);
     String raw = response.body;
-    print(raw);
     raw = raw.replaceAll('\n', '');
     var decoded = codec.decode(raw);
     return decoded;

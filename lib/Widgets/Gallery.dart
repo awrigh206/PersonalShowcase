@@ -27,12 +27,8 @@ class Gallery extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: FadeInImage.memoryNetwork(
                   placeholder: kTransparentImage,
-                  image: project.images[index].name,
+                  image: project.images[index].route,
                 ),
-
-                // Image(
-                //     image: NetworkImage(project.images[index].name),
-                //     semanticLabel: 'Image relevant to the repository'),
               );
             }),
       ),
