@@ -55,20 +55,3 @@ class SingleProjectRoute extends StatelessWidget {
     );
   }
 }
-
-
-// ListView(
-        //   children: [
-        //     Hero(tag: 'icon', child: Image(image: this.mainImage)),
-        //     AsyncMarkdownDisplay(textFuture: markdownFuture),
-        //     FutureBuilder(
-        //         future: markdownFuture,
-        //         builder: (context, snapshot) {
-        //           if (snapshot.hasData) {
-        //             return Gallery(project: project);
-        //           } else {
-        //             return Container();
-        //           }
-        //         }),
-        //   ],
-        // ),
