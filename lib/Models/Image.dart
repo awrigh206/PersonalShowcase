@@ -12,7 +12,7 @@ class Image {
 
   Image.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        route = 'https://51.143.243.36:9090/image?name=' + json['name'];
+        route = GetIt.I.get<Config>().baseUrl + 'image?name=' + json['name'];
 
   Map<String, dynamic> toJson() => {
         'name': name,

@@ -12,8 +12,8 @@ void main() async {
 }
 
 Future<void> setup() async {
-  Config config =
-      Config("https://51.143.243.36:9090/", 'Basic YW5kcmV3OnBhc3N3b3Jk');
+  Config config = Config(
+      "http://51.145.3.232/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);
