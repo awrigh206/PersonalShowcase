@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:showcase/Logic/EmailLogic.dart';
 import 'package:showcase/Models/Email.dart';
@@ -30,53 +31,57 @@ class _EmailFormState extends State<EmailForm> {
   Widget build(BuildContext context) {
     EmailLogic logic = EmailLogic();
     Future<LottieComposition> animationComposite = logic.fetchAnimation();
+    TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
+    bool visible = true;
 
+    TextFormField emailField = TextFormField(
+      controller: emailTextController,
+      maxLength: 50,
+      expands: false,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.email_sharp),
+        border: UnderlineInputBorder(),
+        labelText: 'Enter your email address',
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter you email address';
+        } else if (!EmailValidator.validate(value)) {
+          return 'Please ensure your email is valid';
+        }
+        return null;
+      },
+    );
+
+    TextFormField textBodyField = TextFormField(
+      controller: bodyTextController,
+      maxLength: 500,
+      minLines: 10,
+      maxLines: 40,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.textsms),
+        border: UnderlineInputBorder(),
+        labelText: 'Please enter your message',
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
+    );
     return Form(
       key: formKey,
       child: Column(
         children: [
-          Text('Send an Email'),
+          Text('Send an Email', style: normalStyle),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: TextFormField(
-              controller: emailTextController,
-              maxLength: 50,
-              expands: false,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email_sharp),
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your email address',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter you email address';
-                } else if (!EmailValidator.validate(value)) {
-                  return 'Please ensure your email is valid';
-                }
-                return null;
-              },
-            ),
+            child: Visibility(visible: visible, child: emailField),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextFormField(
-              controller: bodyTextController,
-              maxLength: 500,
-              minLines: 10,
-              maxLines: 40,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.textsms),
-                border: UnderlineInputBorder(),
-                labelText: 'Please enter your message',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-          ),
+              padding: const EdgeInsets.all(10.0),
+              child: Visibility(visible: visible, child: textBodyField)),
           ButtonBar(
             children: [
               RaisedButton(
@@ -106,6 +111,7 @@ class _EmailFormState extends State<EmailForm> {
                     );
                     setState(() {
                       animate = true;
+                      visible = false;
                     });
                     Email email = Email(
                         emailTextController.text,

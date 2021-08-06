@@ -6,14 +6,15 @@ import 'package:showcase/Configuration/Config.dart';
 import 'Widgets/EmailForm.dart';
 import 'Widgets/TopBar.dart';
 import 'package:http/http.dart' as http;
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() async {
   runApp(const MyApp());
 }
 
 Future<void> setup() async {
-  Config config = Config(
-      "http://localhost:9090/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
+  Config config = Config("https://showcase-rest.herokuapp.com/",
+      'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);
@@ -49,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
   List isHovering = [false, false, false, false];
   TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
   TextStyle hoverStyle = GoogleFonts.ubuntu(fontSize: 20, color: Colors.white);
+  TextStyle animationTextStyle =
+      GoogleFonts.courierPrime(fontSize: 20, color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +68,22 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
+                child: ListView(
                   children: [
-                    EmailForm(),
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                            "Welcome to my personal website. This website contains information detailing previous projects that I have worked on. Feel free to explore my previous work and send me an email via the form below if you wish to get in touch.",
+                            textStyle: animationTextStyle,
+                            speed: Duration(milliseconds: 100)),
+                      ],
+                      totalRepeatCount: 1,
+                      pause: const Duration(milliseconds: 1000),
+                      displayFullTextOnTap: true,
+                      stopPauseOnTap: true,
+                    ),
+                    Divider(),
+                    Expanded(child: EmailForm()),
                   ],
                 ),
               )),
