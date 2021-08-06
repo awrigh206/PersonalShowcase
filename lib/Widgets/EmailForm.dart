@@ -111,6 +111,8 @@ class _EmailFormState extends State<EmailForm> {
                         emailTextController.text,
                         bodyTextController.text,
                         DateTime.now().toLocal().toIso8601String());
+                    emailTextController.clear();
+                    bodyTextController.clear();
                     logic.sendEmail(email);
                   }
                 },

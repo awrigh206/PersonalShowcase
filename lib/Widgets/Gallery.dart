@@ -16,6 +16,7 @@ class Gallery extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: GridView.builder(
+            shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 450,
                 childAspectRatio: 1,

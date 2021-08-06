@@ -8,7 +8,10 @@ import 'package:showcase/Widgets/TopBar.dart';
 
 class SingleProjectRoute extends StatelessWidget {
   final Project project;
-  const SingleProjectRoute({Key? key, required this.project}) : super(key: key);
+  final NetworkImage mainImage;
+  const SingleProjectRoute(
+      {Key? key, required this.project, required NetworkImage this.mainImage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +20,25 @@ class SingleProjectRoute extends StatelessWidget {
       appBar: TopBar(),
       body: Background(
           child: Container(
-        child: Column(
-          children: [
+        child: CustomScrollView(slivers: <Widget>[
+          SliverAppBar(
+            flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+              color: Colors.transparent,
+              child: Hero(
+                tag: project.title,
+                child: Image(
+                  image: mainImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )),
+            expandedHeight: 250,
+            backgroundColor: Colors.blueGrey[300],
+            actionsIconTheme: IconThemeData.fallback(),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
             AsyncMarkdownDisplay(textFuture: markdownFuture),
             FutureBuilder(
                 future: markdownFuture,
@@ -29,9 +49,26 @@ class SingleProjectRoute extends StatelessWidget {
                     return Container();
                   }
                 }),
-          ],
-        ),
+          ]))
+        ]),
       )),
     );
   }
 }
+
+
+// ListView(
+        //   children: [
+        //     Hero(tag: 'icon', child: Image(image: this.mainImage)),
+        //     AsyncMarkdownDisplay(textFuture: markdownFuture),
+        //     FutureBuilder(
+        //         future: markdownFuture,
+        //         builder: (context, snapshot) {
+        //           if (snapshot.hasData) {
+        //             return Gallery(project: project);
+        //           } else {
+        //             return Container();
+        //           }
+        //         }),
+        //   ],
+        // ),

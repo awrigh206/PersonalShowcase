@@ -12,6 +12,7 @@ class ProjectTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NetworkImage mainImage = NetworkImage(project.images.first.route);
     if (project.images.isEmpty) {
       return ListTile(
         title: Text(project.title),
@@ -20,20 +21,27 @@ class ProjectTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SingleProjectRoute(project: project)));
+                  builder: (context) => SingleProjectRoute(
+                      project: project, mainImage: mainImage)));
         },
       );
     } else {
       return ListTile(
         title: Text(project.title),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(project.images.first.route),
+        leading: Hero(
+          tag: project.title,
+          child: CircleAvatar(
+            backgroundImage: mainImage,
+          ),
         ),
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SingleProjectRoute(project: project)));
+                  builder: (context) => SingleProjectRoute(
+                        project: project,
+                        mainImage: mainImage,
+                      )));
         },
       );
     }

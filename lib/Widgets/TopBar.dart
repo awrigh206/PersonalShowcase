@@ -1,8 +1,16 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui';
-
+import 'dart:html' as html;
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:showcase/Configuration/Config.dart';
+import 'package:http/http.dart' as http;
+import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Routes/ProjectsPage.dart';
+import 'package:showcase/Routes/SingleProjectRoute.dart';
+import 'package:showcase/main.dart';
 
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   TopBar({Key? key}) : super(key: key);
@@ -36,13 +44,30 @@ class _TopBarState extends State<TopBar> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              const Text('Andrew Wright - Showcase'),
+              InkWell(
+                child: const Text('Andrew Wright - Showcase'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                },
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        Project honoursProject = await getHonours();
+                        NetworkImage mainImage =
+                            NetworkImage(honoursProject.images.first.route);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SingleProjectRoute(
+                                      project: honoursProject,
+                                      mainImage: mainImage,
+                                    )));
+                      },
                       onHover: (value) {
                         setState(() {
                           isHovering[0] = value;
@@ -68,7 +93,7 @@ class _TopBarState extends State<TopBar> {
                                 builder: (context) => ProjectsPage()));
                       },
                       child: Text(
-                        'Other Projects',
+                        'Projects',
                         style: isHovering[1] ? hoverStyle : normalStyle,
                       ),
                     ),
@@ -79,9 +104,15 @@ class _TopBarState extends State<TopBar> {
                           isHovering[2] = value;
                         });
                       },
-                      onTap: () {},
+                      onTap: () async {
+                        final bytes = await getPdfBytes();
+                        final blob = html.Blob([bytes], 'application/pdf');
+                        final url = html.Url.createObjectUrlFromBlob(blob);
+                        html.window.open(url, '_blank');
+                        html.Url.revokeObjectUrl(url);
+                      },
                       child: Text(
-                        'Important Links',
+                        'CV',
                         style: isHovering[2] ? hoverStyle : normalStyle,
                       ),
                     ),
@@ -93,5 +124,27 @@ class _TopBarState extends State<TopBar> {
         ),
       ),
     );
+  }
+
+  Future<Uint8List> getPdfBytes() async {
+    Config config = GetIt.I<Config>();
+    var response = await http.get(Uri.parse(config.baseUrl + "file"), headers: {
+      "Authorization": config.auth,
+    });
+    print(response.body);
+    return response.bodyBytes;
+  }
+
+  Future<Project> getHonours() async {
+    Config config = GetIt.I<Config>();
+    var url = Uri.parse(config.baseUrl + 'project/find?title=Honours');
+    var response = await http.get(
+      url,
+      headers: {
+        "Authorization": config.auth,
+      },
+    );
+    Project project = Project.fromJson(jsonDecode(response.body));
+    return project;
   }
 }
