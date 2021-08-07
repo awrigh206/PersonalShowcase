@@ -32,7 +32,6 @@ class _EmailFormState extends State<EmailForm> {
     EmailLogic logic = EmailLogic();
     Future<LottieComposition> animationComposite = logic.fetchAnimation();
     TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
-    bool visible = true;
 
     TextFormField emailField = TextFormField(
       controller: emailTextController,
@@ -70,6 +69,7 @@ class _EmailFormState extends State<EmailForm> {
         return null;
       },
     );
+
     return Form(
       key: formKey,
       child: Column(
@@ -77,11 +77,9 @@ class _EmailFormState extends State<EmailForm> {
           Text('Send an Email', style: normalStyle),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Visibility(visible: visible, child: emailField),
+            child: emailField,
           ),
-          Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Visibility(visible: visible, child: textBodyField)),
+          Padding(padding: const EdgeInsets.all(10.0), child: textBodyField),
           ButtonBar(
             children: [
               RaisedButton(
@@ -111,7 +109,6 @@ class _EmailFormState extends State<EmailForm> {
                     );
                     setState(() {
                       animate = true;
-                      visible = false;
                     });
                     Email email = Email(
                         emailTextController.text,

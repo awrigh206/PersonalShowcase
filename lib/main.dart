@@ -14,8 +14,8 @@ void main() async {
 }
 
 setup() {
-  Config config = Config("https://showcase-rest.herokuapp.com/",
-      'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
+  Config config = Config(
+      "http://51.145.3.232/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);
@@ -56,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // getListOfProjects();
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: TopBar(),
@@ -69,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ListView(
+                child: Column(
                   children: [
                     AnimatedTextKit(
                       animatedTexts: [
