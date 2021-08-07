@@ -9,10 +9,11 @@ import 'package:http/http.dart' as http;
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() async {
+  setup();
   runApp(const MyApp());
 }
 
-Future<void> setup() async {
+setup() {
   Config config = Config("https://showcase-rest.herokuapp.com/",
       'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    getListOfProjects();
+    // getListOfProjects();
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: TopBar(),
@@ -90,17 +91,5 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ));
-  }
-
-  Future<void> getListOfProjects() async {
-    await setup();
-    Config config = GetIt.I<Config>();
-    var response =
-        await http.get(Uri.parse(config.baseUrl + "project/list"), headers: {
-      "Authorization": config.auth,
-    });
-    var list = jsonDecode(response.body);
-    List<String> stringList = new List<String>.from(list);
-    GetIt.I.registerSingleton<List<String>>(stringList, signalsReady: true);
   }
 }
