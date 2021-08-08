@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Configuration/Config.dart';
 import 'Widgets/EmailForm.dart';
 import 'Widgets/TopBar.dart';
-import 'package:http/http.dart' as http;
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() async {
@@ -15,7 +13,7 @@ void main() async {
 
 setup() {
   Config config = Config(
-      "http://51.145.3.232/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
+      "https://awrigh206.me/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);

@@ -56,7 +56,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   Future<List<Project>> getProjects() async {
     Config config = GetIt.I<Config>();
-    var url = Uri.parse(config.baseUrl + 'project');
+    var url = Uri.parse(config.baseUrl + 'project/list');
     var response = await http.get(
       url,
       headers: {
