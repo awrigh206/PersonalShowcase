@@ -37,7 +37,7 @@ class _TopBarState extends State<TopBar> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return PreferredSize(
-      preferredSize: Size(screenSize.width, 1000),
+      preferredSize: Size(screenSize.width, screenSize.height / 10),
       child: Container(
         color: Colors.blueGrey[200],
         child: Padding(

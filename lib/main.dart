@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Configuration/Config.dart';
+import 'package:showcase/Widgets/Background.dart';
+import 'package:showcase/Widgets/MobileAppBar.dart';
 import 'Widgets/EmailForm.dart';
 import 'Widgets/TopBar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'dart:html' as html;
+
+import 'Widgets/WelcomeText.dart';
 
 void main() async {
   setup();
@@ -12,8 +17,8 @@ void main() async {
 }
 
 setup() {
-  Config config = Config(
-      "https://awrigh206.me/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
+  Config config = Config("https://awrigh206.me:9090/",
+      'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);
@@ -55,38 +60,27 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
+    Container mainBody = Container(
+      color: Colors.white,
+      margin: EdgeInsets.symmetric(horizontal: screenSize.width / 18),
+      child: Center(
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: WelcomeText(animationTextStyle: animationTextStyle),
+      )),
+    );
+
+    if (userAgent.contains("android")) {}
     return Scaffold(
-        appBar: TopBar(),
-        body: Stack(
-          children: [
-            Container(color: Colors.grey[500]),
-            Container(
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: screenSize.width / 18),
-              child: Center(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                            "Welcome to my personal website. This website contains information detailing previous projects that I have worked on. Feel free to explore my previous work and send me an email via the form below if you wish to get in touch.",
-                            textStyle: animationTextStyle,
-                            speed: Duration(milliseconds: 100)),
-                      ],
-                      totalRepeatCount: 1,
-                      pause: const Duration(milliseconds: 1000),
-                      displayFullTextOnTap: true,
-                      stopPauseOnTap: true,
-                    ),
-                    Divider(),
-                    Expanded(child: EmailForm()),
-                  ],
-                ),
-              )),
-            ),
-          ],
-        ));
+      appBar: TopBar(),
+      body: Builder(builder: (context) {
+        if (screenSize.width < 900.0) {
+          return mainBody;
+        } else {
+          return Background(child: mainBody);
+        }
+      }),
+    );
   }
 }

@@ -74,7 +74,6 @@ class _EmailFormState extends State<EmailForm> {
       key: formKey,
       child: Column(
         children: [
-          Text('Send an Email', style: normalStyle),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: emailField,
