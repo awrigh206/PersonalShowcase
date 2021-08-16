@@ -14,6 +14,7 @@ class WelcomeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
       children: [
         AnimatedTextKit(
           animatedTexts: [
@@ -28,7 +29,7 @@ class WelcomeText extends StatelessWidget {
           stopPauseOnTap: true,
         ),
         Divider(),
-        Expanded(child: EmailForm()),
+        EmailForm(),
       ],
     );
   }

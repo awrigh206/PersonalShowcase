@@ -71,16 +71,26 @@ class _MyHomePageState extends State<MyHomePage> {
       )),
     );
 
-    if (userAgent.contains("android")) {}
-    return Scaffold(
-      appBar: TopBar(),
-      body: Builder(builder: (context) {
-        if (screenSize.width < 900.0) {
-          return mainBody;
+    return Builder(
+      builder: (context) {
+        if (userAgent.contains("android") || userAgent.contains("ios")) {
+          return Scaffold(
+            appBar: AppBar(title: Text('Showcase')),
+            body: mainBody,
+          );
         } else {
-          return Background(child: mainBody);
+          return Scaffold(
+            appBar: TopBar(),
+            body: Builder(builder: (context) {
+              if (screenSize.width < 900.0) {
+                return mainBody;
+              } else {
+                return Background(child: mainBody);
+              }
+            }),
+          );
         }
-      }),
+      },
     );
   }
 }
