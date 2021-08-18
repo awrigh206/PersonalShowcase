@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:showcase/Helpers/HttpHelper.dart';
 import 'package:showcase/Models/Project.dart';
