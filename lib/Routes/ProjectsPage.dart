@@ -6,6 +6,7 @@ import 'package:showcase/Configuration/Config.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:http/http.dart' as http;
 import 'package:showcase/Widgets/Background.dart';
+import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/ProjectTile.dart';
 import 'package:showcase/Widgets/TopBar.dart';
 
@@ -20,38 +21,31 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     Future<List<Project>> projects = getProjects();
-    return Scaffold(
-      appBar: TopBar(),
-      body: Stack(children: [
-        Background(
-          child: Container(
-            child: Center(
-              child: FutureBuilder<List<Project>>(
-                  future: projects,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List<Project> realProjects =
-                          snapshot.data as List<Project>;
-                      return ListView.builder(
-                          itemCount: realProjects.length,
-                          itemBuilder: (context, index) {
-                            return ProjectTile(project: realProjects[index]);
-                          });
-                    } else if (snapshot.hasError) {
-                      return ListTile(
-                        title: Text(snapshot.error.toString()),
-                        subtitle: Text(snapshot.error.runtimeType.toString()),
-                        leading: Icon(Icons.error),
-                      );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  }),
-            ),
-          ),
-        ),
-      ]),
+
+    Widget focus = Center(
+      child: FutureBuilder<List<Project>>(
+          future: projects,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<Project> realProjects = snapshot.data as List<Project>;
+              return ListView.builder(
+                  itemCount: realProjects.length,
+                  itemBuilder: (context, index) {
+                    return ProjectTile(project: realProjects[index]);
+                  });
+            } else if (snapshot.hasError) {
+              return ListTile(
+                title: Text(snapshot.error.toString()),
+                subtitle: Text(snapshot.error.runtimeType.toString()),
+                leading: Icon(Icons.error),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          }),
     );
+
+    return BarBuilder(focusWidget: focus);
   }
 
   Future<List<Project>> getProjects() async {

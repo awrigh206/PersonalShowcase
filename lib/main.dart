@@ -3,12 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Configuration/Config.dart';
 import 'package:showcase/Widgets/Background.dart';
-import 'package:showcase/Widgets/MobileAppBar.dart';
-import 'Widgets/EmailForm.dart';
+import 'package:showcase/Widgets/BarBuilder.dart';
+import 'package:showcase/Widgets/SideDrawer.dart';
 import 'Widgets/TopBar.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'dart:html' as html;
-
 import 'Widgets/WelcomeText.dart';
 
 void main() async {
@@ -54,43 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List isHovering = [false, false, false, false];
   TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
   TextStyle hoverStyle = GoogleFonts.ubuntu(fontSize: 20, color: Colors.white);
-  TextStyle animationTextStyle =
-      GoogleFonts.courierPrime(fontSize: 20, color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-    Container mainBody = Container(
-      color: Colors.white,
-      margin: EdgeInsets.symmetric(horizontal: screenSize.width / 18),
-      child: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: WelcomeText(animationTextStyle: animationTextStyle),
-      )),
-    );
-
-    return Builder(
-      builder: (context) {
-        if (userAgent.contains("android") || userAgent.contains("ios")) {
-          return Scaffold(
-            appBar: AppBar(title: Text('Showcase')),
-            body: mainBody,
-          );
-        } else {
-          return Scaffold(
-            appBar: TopBar(),
-            body: Builder(builder: (context) {
-              if (screenSize.width < 900.0) {
-                return mainBody;
-              } else {
-                return Background(child: mainBody);
-              }
-            }),
-          );
-        }
-      },
-    );
+    return BarBuilder(focusWidget: WelcomeText());
   }
 }
