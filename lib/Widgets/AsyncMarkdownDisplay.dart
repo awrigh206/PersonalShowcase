@@ -8,19 +8,25 @@ class AsyncMarkdownDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-          future: textFuture,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              String text = snapshot.data as String;
-              return Markdown(shrinkWrap: true, data: text);
-            } else if (snapshot.hasError) {
-              return Text("Error: " + snapshot.error.toString());
-            } else {
-              return CircularProgressIndicator();
-            }
-          }),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Card(
+        borderOnForeground: true,
+        elevation: 20.0,
+        shadowColor: Colors.blueGrey,
+        child: FutureBuilder(
+            future: textFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                String text = snapshot.data as String;
+                return Markdown(shrinkWrap: true, data: text);
+              } else if (snapshot.hasError) {
+                return Text("Error: " + snapshot.error.toString());
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
+      ),
     );
   }
 }

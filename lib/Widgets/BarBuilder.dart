@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:showcase/Widgets/Background.dart';
 import 'dart:html' as html;
-
 import 'SideDrawer.dart';
 import 'TopBar.dart';
-import 'WelcomeText.dart';
 
 class BarBuilder extends StatelessWidget {
   const BarBuilder({Key? key, required Widget this.focusWidget})
