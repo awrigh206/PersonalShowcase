@@ -1,11 +1,7 @@
 import 'dart:ui';
-import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Logic/BarLogic.dart';
-import 'package:showcase/Models/Project.dart';
-import 'package:showcase/Routes/ProjectsPage.dart';
-import 'package:showcase/Routes/SingleProjectRoute.dart';
 import 'package:showcase/main.dart';
 
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
@@ -27,18 +23,15 @@ class _TopBarState extends State<TopBar> {
   BarLogic logic = BarLogic();
 
   Color backgroundColor = Colors.white;
-  double width = 50;
-  double height = 50;
-
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return PreferredSize(
-      preferredSize: Size(screenSize.width, screenSize.height / 10),
+      preferredSize: Size(screenSize.width, screenSize.height / 9),
       child: Container(
         color: Colors.blueGrey[200],
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(15.0),
           child: Row(
             children: [
               InkWell(
