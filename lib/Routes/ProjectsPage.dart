@@ -16,31 +16,62 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
+  TextEditingController controller = TextEditingController();
+  String searchText = "";
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<List<Project>> projects = getProjects();
 
-    Widget focus = Center(
-      child: FutureBuilder<List<Project>>(
-          future: projects,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<Project> realProjects = snapshot.data as List<Project>;
-              return ListView.builder(
-                  itemCount: realProjects.length,
-                  itemBuilder: (context, index) {
-                    return ProjectTile(project: realProjects[index]);
-                  });
-            } else if (snapshot.hasError) {
-              return ListTile(
-                title: Text(snapshot.error.toString()),
-                subtitle: Text(snapshot.error.runtimeType.toString()),
-                leading: Icon(Icons.error),
-              );
-            } else {
-              return CircularProgressIndicator();
-            }
-          }),
+    Widget focus = Column(
+      children: [
+        TextField(
+          controller: controller,
+          decoration: new InputDecoration(
+              hintText: 'Search',
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0))),
+          onChanged: (text) {
+            setState(() {
+              searchText = text;
+            });
+          },
+        ),
+        FutureBuilder<List<Project>>(
+            future: projects,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Project> realProjects = snapshot.data as List<Project>;
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: realProjects.length,
+                    itemBuilder: (context, index) {
+                      print(searchText);
+                      if (searchText.isNotEmpty &&
+                          realProjects[index].title.contains(searchText)) {
+                        return ProjectTile(project: realProjects[index]);
+                      } else if (searchText.isEmpty) {
+                        return ProjectTile(project: realProjects[index]);
+                      }
+                      return Container();
+                    });
+              } else if (snapshot.hasError) {
+                return ListTile(
+                  title: Text(snapshot.error.toString()),
+                  subtitle: Text(snapshot.error.runtimeType.toString()),
+                  leading: Icon(Icons.error),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
+      ],
     );
 
     return BarBuilder(focusWidget: focus);
