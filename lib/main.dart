@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Configuration/Config.dart';
-import 'package:showcase/Widgets/Background.dart';
 import 'package:showcase/Widgets/BarBuilder.dart';
-import 'package:showcase/Widgets/SideDrawer.dart';
-import 'Widgets/TopBar.dart';
-import 'dart:html' as html;
 import 'Widgets/WelcomeText.dart';
 
 void main() async {
@@ -15,8 +11,8 @@ void main() async {
 }
 
 setup() {
-  Config config = Config("https://awrigh206.me:9090/",
-      'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
+  Config config = Config(
+      "https://awrigh206.me/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
   GetIt getIt = GetIt.instance;
   if (!getIt.isRegistered(instance: Config)) {
     getIt.registerSingleton<Config>(config, signalsReady: true);

@@ -5,10 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:showcase/Configuration/Config.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:http/http.dart' as http;
-import 'package:showcase/Widgets/Background.dart';
 import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/ProjectTile.dart';
-import 'package:showcase/Widgets/TopBar.dart';
 
 class ProjectsPage extends StatefulWidget {
   ProjectsPage({Key? key}) : super(key: key);

@@ -23,7 +23,6 @@ class SingleProjectRoute extends StatelessWidget {
           SliverAppBar(
             primary: true,
             stretch: true,
-            floating: true,
             flexibleSpace: FlexibleSpaceBar(
                 background: Container(
               color: Colors.transparent,
