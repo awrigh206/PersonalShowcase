@@ -16,11 +16,40 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
   }
 }
 
-class _TopBarState extends State<TopBar> {
+class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
   List isHovering = [false, false, false, false];
   TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
   TextStyle hoverStyle = GoogleFonts.ubuntu(fontSize: 20, color: Colors.white);
   BarLogic logic = BarLogic();
+
+  late Animation colorAnimation;
+  late Color color;
+  late AnimationController controller;
+  late Animation sizeAnimation;
+  late double textSize;
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    colorAnimation =
+        ColorTween(begin: Colors.black, end: Colors.white).animate(controller);
+    sizeAnimation = Tween(begin: 15.0, end: 22.0).animate(controller);
+    color = Colors.black;
+    textSize = 15.0;
+    colorAnimation.addListener(() {
+      setState(() {
+        color = colorAnimation.value;
+      });
+    });
+
+    sizeAnimation.addListener(() {
+      setState(() {
+        textSize = sizeAnimation.value;
+      });
+    });
+  }
 
   Color backgroundColor = Colors.white;
   @override
@@ -35,7 +64,16 @@ class _TopBarState extends State<TopBar> {
           child: Row(
             children: [
               InkWell(
-                child: const Text('Andrew Wright - Showcase'),
+                child: Text('Andrew Wright - Showcase',
+                    style:
+                        TextStyle(color: this.color, fontSize: this.textSize)),
+                onHover: (value) {
+                  if (value) {
+                    controller.forward();
+                  } else {
+                    controller.reverse();
+                  }
+                },
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MyHomePage()));

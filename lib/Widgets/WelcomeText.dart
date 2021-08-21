@@ -1,16 +1,22 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'EmailForm.dart';
 
-class WelcomeText extends StatelessWidget {
+class WelcomeText extends StatefulWidget {
   WelcomeText({
     Key? key,
   }) : super(key: key);
 
+  @override
+  _WelcomeTextState createState() => _WelcomeTextState();
+}
+
+class _WelcomeTextState extends State<WelcomeText> {
   final TextStyle animationTextStyle =
       GoogleFonts.courierPrime(fontSize: 20, color: Colors.black);
+
+  bool run = true;
 
   @override
   Widget build(BuildContext context) {
