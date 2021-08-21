@@ -3,13 +3,23 @@ import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Routes/SingleImageRoute.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class Gallery extends StatelessWidget {
+class Gallery extends StatefulWidget {
   const Gallery({
     Key? key,
     required this.project,
   }) : super(key: key);
 
   final Project project;
+
+  @override
+  _GalleryState createState() => _GalleryState();
+}
+
+class _GalleryState extends State<Gallery> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +34,33 @@ class Gallery extends StatelessWidget {
                 borderOnForeground: true,
                 elevation: 20.0,
                 shadowColor: Colors.blueGrey,
-                child: ImageGrid(project: project),
+                child: ImageGrid(project: widget.project),
               );
             } else {
-              return ImageGrid(project: project);
+              return ImageGrid(project: widget.project);
             }
           })),
     );
   }
 }
 
-class ImageGrid extends StatelessWidget {
+class ImageGrid extends StatefulWidget {
   const ImageGrid({
     Key? key,
     required this.project,
   }) : super(key: key);
 
   final Project project;
+
+  @override
+  _ImageGridState createState() => _ImageGridState();
+}
+
+class _ImageGridState extends State<ImageGrid> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +71,11 @@ class ImageGrid extends StatelessWidget {
             childAspectRatio: 1,
             crossAxisSpacing: 15,
             mainAxisSpacing: 15),
-        itemCount: project.images.length,
+        itemCount: widget.project.images.length,
         itemBuilder: (context, index) {
           FadeInImage currentImage = FadeInImage.memoryNetwork(
             placeholder: kTransparentImage,
-            image: project.images[index].route,
+            image: widget.project.images[index].route,
           );
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
