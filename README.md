@@ -1,3 +1,14 @@
 # showcase
 
-A front end for my personal showcase website created in Flutter
+A front end for my personal showcase website created in Flutter. This connects to the Spring REST API backend to create a full stack web applicatio. This front end can be used in a web browser or it can be installed as a progress web application, although in each case a connection to the internet will be requried for proper function.
+
+## Purpose 
+This website was created to showcase previous work and to document my projects going forward. It is built with expandability in mind. I took inspiration from existing blogging platforms in order to make it 
+
+## Architecture 
+There are **four** main pieces of this system, the first is this application which serves as the client. The second piece is the aforementioned backend REST API which provides necessary services, such as: fetching project information, sending contact emails, etc. The third piece is a mysql database, this is seperate from the backend as the backend is dockerised (data created in a docker container is not persisted between runs) and so a seperate database server is used to store project records, this also allows for greater flexbility. The fourth piece is a Microsoft Azure file share, this is used to store the images for all of the projects shown in this application. For security reasons, only the backend has direct access to both the database and the fileshare and so the front end must send requests there for these resources.
+
+The only information that the database stores is: Project (String title, List<String> imageNames, String githubLink). This is because the text content describing the projects is not stored in the datbase, the text that you are reading currently is written in Markdown and is stored in a github repo that the backend has access to. The backend then passes this Markdown to the front which renders it for you to read. This decision was made as it allows for rapid editing of website content without having to change any code which means no down time for updates and a more relaxing/ risk free editing environment. Additionally the images are stored on the Azure file share and so only the names must be saved to the database in order to later retrieve them.
+
+## Hosting 
+The front end of this project is hosted on Github Pages, the markdown is hosted in the relevant project repositories on Github and the backend is running on a Digital Ocean Droplet running Docker. This solution was implemented as it is very cost effective and easy to manage. Docker was used in this instance as it makes updating the backend very easy and it means that the backend is very portable, should I later need to change cloud providers. This solution also has a lot of scalability, far more than this website will ever need which is good as I plan to operate this website over the course of my career with regular updates.
