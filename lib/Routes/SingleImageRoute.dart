@@ -25,6 +25,7 @@ class SingleImageRoute extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 color: Colors.white,
+                splashColor: Theme.of(context).primaryColor,
                 icon: Icon(Icons.arrow_back)),
           ],
         ),
