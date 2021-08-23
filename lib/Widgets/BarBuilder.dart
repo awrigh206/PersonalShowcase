@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:showcase/Widgets/Background.dart';
+import 'package:showcase/Widgets/WaveWidget.dart';
 import 'dart:html' as html;
 import 'SideDrawer.dart';
 import 'TopBar.dart';
@@ -46,7 +47,7 @@ class BarBuilder extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            appBar: TopBar(),
+            appBar: WaveWidget(focusWidget: TopBar()),
             body: Builder(builder: (context) {
               if (screenSize.width < 900.0) {
                 return mainBody;

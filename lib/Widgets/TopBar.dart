@@ -55,84 +55,80 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    return PreferredSize(
-      preferredSize: Size(screenSize.width, screenSize.height / 9),
-      child: Container(
-        color: Colors.blueGrey[200],
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            children: [
-              InkWell(
-                child: Text('Andrew Wright - Showcase',
-                    style:
-                        TextStyle(color: this.color, fontSize: this.textSize)),
-                onHover: (value) {
-                  if (value) {
-                    controller.forward();
-                  } else {
-                    controller.reverse();
-                  }
-                },
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
+    return Container(
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          children: [
+            InkWell(
+              child: Text('Andrew Wright - Showcase',
+                  style: TextStyle(color: this.color, fontSize: this.textSize)),
+              onHover: (value) {
+                if (value) {
+                  controller.forward();
+                } else {
+                  controller.reverse();
+                }
+              },
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
+              },
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await logic.navigateToHonours(context);
+                    },
+                    onHover: (value) {
+                      setState(() {
+                        isHovering[0] = value;
+                      });
+                    },
+                    child: Text(
+                      'Honours Project',
+                      style: isHovering[0] ? hoverStyle : normalStyle,
+                    ),
+                  ),
+                  SizedBox(width: screenSize.width / 20),
+                  InkWell(
+                    onHover: (value) {
+                      setState(() {
+                        isHovering[1] = value;
+                        backgroundColor = Colors.greenAccent;
+                      });
+                    },
+                    onTap: () {
+                      logic.getProjects(context);
+                    },
+                    child: Text(
+                      'Projects',
+                      style: isHovering[1] ? hoverStyle : normalStyle,
+                    ),
+                  ),
+                  SizedBox(width: screenSize.width / 20),
+                  InkWell(
+                    onHover: (value) {
+                      setState(() {
+                        isHovering[2] = value;
+                      });
+                    },
+                    onTap: () async {
+                      await logic.getPdf();
+                    },
+                    child: Text(
+                      'CV',
+                      style: isHovering[2] ? hoverStyle : normalStyle,
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        await logic.navigateToHonours(context);
-                      },
-                      onHover: (value) {
-                        setState(() {
-                          isHovering[0] = value;
-                        });
-                      },
-                      child: Text(
-                        'Honours Project',
-                        style: isHovering[0] ? hoverStyle : normalStyle,
-                      ),
-                    ),
-                    SizedBox(width: screenSize.width / 20),
-                    InkWell(
-                      onHover: (value) {
-                        setState(() {
-                          isHovering[1] = value;
-                          backgroundColor = Colors.greenAccent;
-                        });
-                      },
-                      onTap: () {
-                        logic.getProjects(context);
-                      },
-                      child: Text(
-                        'Projects',
-                        style: isHovering[1] ? hoverStyle : normalStyle,
-                      ),
-                    ),
-                    SizedBox(width: screenSize.width / 20),
-                    InkWell(
-                      onHover: (value) {
-                        setState(() {
-                          isHovering[2] = value;
-                        });
-                      },
-                      onTap: () async {
-                        await logic.getPdf();
-                      },
-                      child: Text(
-                        'CV',
-                        style: isHovering[2] ? hoverStyle : normalStyle,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
