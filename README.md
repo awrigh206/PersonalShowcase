@@ -1,4 +1,4 @@
-# showcase
+# Showcase
 
 A front end for my personal showcase website created in Flutter. This connects to the Spring REST API backend to create a full stack web applicatio. This front end can be used in a web browser or it can be installed as a progress web application, although in each case a connection to the internet will be requried for proper function.
 
