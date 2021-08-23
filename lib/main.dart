@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:showcase/Configuration/Config.dart';
+import 'package:showcase/Widgets/BarBuilder.dart';
+import 'Widgets/WelcomeText.dart';
 
-import 'Widgets/TopBar.dart';
-
-void main() {
+void main() async {
+  setup();
   runApp(const MyApp());
+}
+
+setup() {
+  Config config = Config(
+      "https://awrigh206.me/", 'Basic YW5kcmV3OnBIdkhlZUxoODNiTllrSnhHYkNQ');
+  GetIt getIt = GetIt.instance;
+  if (!getIt.isRegistered(instance: Config)) {
+    getIt.registerSingleton<Config>(config, signalsReady: true);
+  }
+
+  return;
 }
 
 class MyApp extends StatelessWidget {
@@ -37,32 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-        appBar: TopBar(),
-        body: Stack(
-          children: [
-            Container(color: Colors.grey[500]),
-            Container(
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: screenSize.width / 18),
-              child: Center(
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                        child: Text("Test Button"), onPressed: () {}),
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://localhost:9090/image?name=HappyFace.jpg',
-                          headers: {
-                            "authorization": "Basic YW5kcmV3OnBhc3N3b3Jk"
-                          }),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ));
+    return BarBuilder(focusWidget: WelcomeText());
   }
 }

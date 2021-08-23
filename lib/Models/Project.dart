@@ -1,16 +1,21 @@
+import 'package:showcase/Models/Image.dart';
+
 class Project {
   String title;
   List<String> paragraphsOfContent;
-  List<String> images;
+  List<Image> images;
 
   Project(this.title, this.paragraphsOfContent, this.images);
 
   factory Project.fromJson(Map<String, dynamic> json) {
     var dynamicContentList = json['paragraphsOfContent'];
-    var dynmaicImageList = json['images'];
 
-    return new Project(json['title'], new List<String>.from(dynamicContentList),
-        new List<String>.from(dynmaicImageList));
+    String title = json['title'];
+    List<String> content = new List<String>.from(dynamicContentList);
+    var list = json['images'] as List;
+    List<Image> imageList = list.map((i) => Image.fromJson(i)).toList();
+
+    return new Project(title, content, imageList);
   }
 
   Map<String, dynamic> toJson() => {

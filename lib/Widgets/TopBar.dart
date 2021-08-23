@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:showcase/Routes/ProjectsPage.dart';
+import 'package:showcase/Logic/BarLogic.dart';
+import 'package:showcase/main.dart';
 
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   TopBar({Key? key}) : super(key: key);
@@ -16,33 +16,77 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
   }
 }
 
-class _TopBarState extends State<TopBar> {
+class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
   List isHovering = [false, false, false, false];
   TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
   TextStyle hoverStyle = GoogleFonts.ubuntu(fontSize: 20, color: Colors.white);
+  BarLogic logic = BarLogic();
+
+  late Animation colorAnimation;
+  late Color color;
+  late AnimationController controller;
+  late Animation sizeAnimation;
+  late double textSize;
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    colorAnimation =
+        ColorTween(begin: Colors.black, end: Colors.white).animate(controller);
+    sizeAnimation = Tween(begin: 15.0, end: 22.0).animate(controller);
+    color = Colors.black;
+    textSize = 15.0;
+    colorAnimation.addListener(() {
+      setState(() {
+        color = colorAnimation.value;
+      });
+    });
+
+    sizeAnimation.addListener(() {
+      setState(() {
+        textSize = sizeAnimation.value;
+      });
+    });
+  }
 
   Color backgroundColor = Colors.white;
-  double width = 50;
-  double height = 50;
-
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return PreferredSize(
-      preferredSize: Size(screenSize.width, 1000),
+      preferredSize: Size(screenSize.width, screenSize.height / 9),
       child: Container(
         color: Colors.blueGrey[200],
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(15.0),
           child: Row(
             children: [
-              const Text('Andrew Wright - Showcase'),
+              InkWell(
+                child: Text('Andrew Wright - Showcase',
+                    style:
+                        TextStyle(color: this.color, fontSize: this.textSize)),
+                onHover: (value) {
+                  if (value) {
+                    controller.forward();
+                  } else {
+                    controller.reverse();
+                  }
+                },
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                },
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        await logic.navigateToHonours(context);
+                      },
                       onHover: (value) {
                         setState(() {
                           isHovering[0] = value;
@@ -62,13 +106,10 @@ class _TopBarState extends State<TopBar> {
                         });
                       },
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProjectsPage()));
+                        logic.getProjects(context);
                       },
                       child: Text(
-                        'Other Projects',
+                        'Projects',
                         style: isHovering[1] ? hoverStyle : normalStyle,
                       ),
                     ),
@@ -79,9 +120,11 @@ class _TopBarState extends State<TopBar> {
                           isHovering[2] = value;
                         });
                       },
-                      onTap: () {},
+                      onTap: () async {
+                        await logic.getPdf();
+                      },
                       child: Text(
-                        'Important Links',
+                        'CV',
                         style: isHovering[2] ? hoverStyle : normalStyle,
                       ),
                     ),
