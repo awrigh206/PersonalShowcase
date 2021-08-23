@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class WaveClipper extends CustomClipper<Path> {
   final animationValue;
+  final double rightShift = 200;
 
   const WaveClipper(this.animationValue);
   @override
@@ -11,14 +12,15 @@ class WaveClipper extends CustomClipper<Path> {
 
     var firstStart = Offset(size.width / 5 - animationValue, size.height);
     //fist point of quadratic bezier curve
-    var firstEnd =
-        Offset(size.width / 2.25 - animationValue, size.height - 50.0);
+    var firstEnd = Offset(
+        (size.width / 2.25) + rightShift - animationValue, size.height - 50.0);
     //second point of quadratic bezier curve
     path.quadraticBezierTo(
         firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
 
     var secondStart = Offset(
-        size.width - (size.width / 3.24) - animationValue, size.height - 105);
+        size.width - (size.width / 3.24) + rightShift - animationValue,
+        size.height - 105);
     //third point of quadratic bezier curve
     var secondEnd = Offset(size.width, size.height - 10);
     //fourth point of quadratic bezier curve
