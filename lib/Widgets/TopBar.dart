@@ -29,6 +29,12 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
   late double textSize;
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     controller =

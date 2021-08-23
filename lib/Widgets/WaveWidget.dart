@@ -21,6 +21,12 @@ class _WaveWidgetState extends State<WaveWidget>
   late double value;
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     value = 100.0;
