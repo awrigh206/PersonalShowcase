@@ -56,6 +56,12 @@ class _WaveWidgetState extends State<WaveWidget>
             child: Stack(
           children: <Widget>[
             Opacity(
+              opacity: 0.1,
+              child: Container(
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            Opacity(
               opacity: 0.5,
               child: ClipPath(
                 clipper: WaveClipper(value),

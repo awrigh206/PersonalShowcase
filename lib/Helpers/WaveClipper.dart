@@ -20,7 +20,7 @@ class WaveClipper extends CustomClipper<Path> {
 
     var secondStart = Offset(
         size.width - (size.width / 3.24) + rightShift - animationValue,
-        size.height - 105);
+        size.height - 80);
     //third point of quadratic bezier curve
     var secondEnd = Offset(size.width, size.height - 10);
     //fourth point of quadratic bezier curve
