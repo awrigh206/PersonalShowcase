@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Routes/SingleImageRoute.dart';
+import 'package:showcase/Widgets/ImageDisplay.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class Gallery extends StatefulWidget {
@@ -79,17 +80,13 @@ class _ImageGridState extends State<ImageGrid> {
           );
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SingleImageRoute(
-                              displayImage: currentImage,
-                              index: index,
-                            )));
-              },
-              child: Hero(tag: 'image' + index.toString(), child: currentImage),
+            child: InkWell(
+              child: Hero(
+                  tag: 'image' + index.toString(),
+                  child: ImageDisplay(
+                    currentImage: currentImage,
+                    index: index,
+                  )),
             ),
           );
         });
