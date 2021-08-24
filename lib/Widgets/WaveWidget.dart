@@ -31,7 +31,7 @@ class _WaveWidgetState extends State<WaveWidget>
     super.initState();
     value = 100.0;
     controller =
-        AnimationController(duration: const Duration(seconds: 10), vsync: this);
+        AnimationController(duration: const Duration(seconds: 5), vsync: this);
     waveAnimation = Tween(begin: 90.0, end: 500.0).animate(controller);
 
     waveAnimation.addListener(() {
