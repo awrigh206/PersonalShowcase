@@ -23,9 +23,12 @@ class SingleProjectRoute extends StatelessWidget {
           SliverAppBar(
             primary: true,
             stretch: true,
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
             flexibleSpace: FlexibleSpaceBar(
                 background: Container(
-              color: Colors.transparent,
+              color: Colors.white,
               child: Hero(
                 tag: project.title,
                 child: Image(

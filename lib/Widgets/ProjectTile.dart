@@ -32,6 +32,7 @@ class ProjectTile extends StatelessWidget {
           tag: project.title,
           child: CircleAvatar(
             backgroundImage: mainImage,
+            backgroundColor: Colors.white,
           ),
         ),
         onTap: () {
