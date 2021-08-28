@@ -18,7 +18,9 @@ class _WaveWidgetState extends State<WaveWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation waveAnimation;
+  late Animation heightAnimation;
   late double value;
+  late double heightValue;
 
   @override
   void dispose() {
@@ -30,13 +32,15 @@ class _WaveWidgetState extends State<WaveWidget>
   void initState() {
     super.initState();
     value = 100.0;
+    heightValue = 20.0;
     controller =
         AnimationController(duration: const Duration(seconds: 5), vsync: this);
     waveAnimation = Tween(begin: 90.0, end: 500.0).animate(controller);
-
+    heightAnimation = Tween(begin: 20.0, end: 100.0).animate(controller);
     waveAnimation.addListener(() {
       setState(() {
         value = waveAnimation.value;
+        heightValue = heightAnimation.value;
       });
       if (waveAnimation.isCompleted) {
         controller.reverse();
@@ -70,7 +74,7 @@ class _WaveWidgetState extends State<WaveWidget>
             Opacity(
               opacity: 0.5,
               child: ClipPath(
-                clipper: WaveClipper(value),
+                clipper: WaveClipper(value, heightValue),
                 child: Container(
                   color: Theme.of(context).accentColor,
                   height: 150,
@@ -78,7 +82,7 @@ class _WaveWidgetState extends State<WaveWidget>
               ),
             ),
             ClipPath(
-                clipper: WaveClipper(waveAnimation.value),
+                clipper: WaveClipper(waveAnimation.value, heightValue),
                 child: Container(
                   padding: EdgeInsets.only(bottom: 50),
                   color: Theme.of(context).primaryColor,

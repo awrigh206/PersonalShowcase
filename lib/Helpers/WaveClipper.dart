@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class WaveClipper extends CustomClipper<Path> {
   final animationValue;
+  final heightAnimationValue;
   final double rightShift = 200;
 
-  const WaveClipper(this.animationValue);
+  const WaveClipper(this.animationValue, this.heightAnimationValue);
   @override
   Path getClip(Size size) {
     var path = new Path();
