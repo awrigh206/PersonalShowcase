@@ -26,25 +26,52 @@ class ProjectTile extends StatelessWidget {
         },
       );
     } else {
-      return ListTile(
-        title: Text(project.title),
-        leading: Hero(
-          tag: project.title,
-          child: CircleAvatar(
-            backgroundImage: mainImage,
-            backgroundColor: Colors.white,
-          ),
-        ),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SingleProjectRoute(
-                        project: project,
-                        mainImage: mainImage,
-                      )));
-        },
-      );
+      return Builder(builder: (context) {
+        if (project.tagList.isNotEmpty) {
+          return ListTile(
+            title: Text(project.title),
+            leading: Hero(
+              tag: project.title,
+              child: CircleAvatar(
+                backgroundImage: mainImage,
+                backgroundColor: Colors.white,
+              ),
+            ),
+            trailing: ListView.builder(
+                itemCount: project.tagList.length,
+                itemBuilder: (context, index) {
+                  return Text(project.tagList[index].name);
+                }),
+            onTap: () {
+              goToProjectPage(project, mainImage, context);
+            },
+          );
+        } else {
+          return ListTile(
+            title: Text(project.title),
+            leading: Hero(
+              tag: project.title,
+              child: CircleAvatar(
+                backgroundImage: mainImage,
+                backgroundColor: Colors.white,
+              ),
+            ),
+            onTap: () {
+              goToProjectPage(project, mainImage, context);
+            },
+          );
+        }
+      });
     }
   }
+}
+
+void goToProjectPage(Project project, NetworkImage mainImage, dynamic context) {
+  Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SingleProjectRoute(
+                project: project,
+                mainImage: mainImage,
+              )));
 }
