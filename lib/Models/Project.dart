@@ -14,11 +14,13 @@ class Project {
 
     String title = json['title'];
     List<String> content = new List<String>.from(dynamicContentList);
-    var list = json['images'] as List;
-    List<Image> imageList = list.map((i) => Image.fromJson(i)).toList();
+    var imageJsonList = json['images'] as List;
+    List<Image> imageList =
+        imageJsonList.map((i) => Image.fromJson(i)).toList();
     List<Tag> tagList = new List.empty();
     try {
-      tagList = list.map((i) => Tag.fromJson(i)).toList();
+      var tagJsonList = json['tagList'] as List;
+      tagList = tagJsonList.map((i) => Tag.fromJson(i)).toList();
     } catch (e) {}
 
     return new Project(title, content, imageList, tagList);

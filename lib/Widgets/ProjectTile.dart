@@ -38,9 +38,24 @@ class ProjectTile extends StatelessWidget {
               ),
             ),
             trailing: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
                 itemCount: project.tagList.length,
                 itemBuilder: (context, index) {
-                  return Text(project.tagList[index].name);
+                  return Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.lightBlueAccent,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(project.tagList[index].name),
+                        )),
+                  );
                 }),
             onTap: () {
               goToProjectPage(project, mainImage, context);
