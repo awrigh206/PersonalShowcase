@@ -44,16 +44,12 @@ class ProjectTile extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.lightBlueAccent,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(project.tagList[index].name),
+                    child: RaisedButton(
+                        color: Colors.blueAccent,
+                        onPressed: () {},
+                        child: Text(
+                          project.tagList[index].name,
+                          style: TextStyle(color: Colors.white),
                         )),
                   );
                 }),
