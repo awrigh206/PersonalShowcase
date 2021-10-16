@@ -21,6 +21,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
   TextEditingController controller = TextEditingController();
   String searchText = '';
   String dropdownValue = 'Select a Tag';
+  late Future<List<Project>> projects;
+
+  @override
+  void initState() {
+    super.initState();
+    projects = getProjects();
+  }
 
   @override
   void dispose() {
@@ -30,7 +37,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Project>> projects = getProjects();
     final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
 
     Widget focus = Column(
@@ -64,8 +70,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             snapshot.connectionState == ConnectionState.done) {
                           List<String> availableTags = getAllTags(realProjects);
                           return DropdownButton<String>(
-                            hint: Text(
-                                'Select a tag to show only projects with that tag'),
+                            hint: Text('Select a tag to filter'),
                             value: dropdownValue,
                             icon: const Icon(Icons.arrow_downward),
                             iconSize: 32,
@@ -116,10 +121,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         }
                       } else if (searchText.isNotEmpty &&
                           realProjects[index].title.contains(searchText)) {
+                        return ProjectTile(project: realProjects[index]);
                       } else if (searchText.isEmpty) {
                         return ProjectTile(project: realProjects[index]);
                       } else {
-                        return ProjectTile(project: realProjects[index]);
+                        return Container();
                       }
                       return Container();
                     });
