@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -7,6 +8,7 @@ import 'package:showcase/Models/Project.dart';
 import 'package:http/http.dart' as http;
 import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/ProjectTile.dart';
+import 'dart:html' as html;
 
 class ProjectsPage extends StatefulWidget {
   ProjectsPage({Key? key}) : super(key: key);
@@ -17,7 +19,8 @@ class ProjectsPage extends StatefulWidget {
 
 class _ProjectsPageState extends State<ProjectsPage> {
   TextEditingController controller = TextEditingController();
-  String searchText = "";
+  String searchText = '';
+  String dropdownValue = 'Java';
 
   @override
   void dispose() {
@@ -28,20 +31,68 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     Future<List<Project>> projects = getProjects();
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
 
     Widget focus = Column(
       children: [
-        TextField(
-          controller: controller,
-          decoration: new InputDecoration(
-              hintText: 'Search',
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-          onChanged: (text) {
-            setState(() {
-              searchText = text;
-            });
-          },
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: controller,
+                decoration: new InputDecoration(
+                    hintText: 'Search',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+                onChanged: (text) {
+                  setState(() {
+                    searchText = text;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  FutureBuilder(
+                      future: projects,
+                      builder: (context, snapshot) {
+                        List<Project> realProjects =
+                            snapshot.data as List<Project>;
+                        if (snapshot.hasData) {
+                          List<String> availableTags = getAllTags(realProjects);
+                          return DropdownButton<String>(
+                            value: dropdownValue,
+                            icon: const Icon(Icons.arrow_downward),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.blueAccent),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.blueAccent,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue!;
+                              });
+                            },
+                            items: availableTags
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          );
+                        } else {
+                          return Text('Project:');
+                        }
+                      }),
+                ],
+              ),
+            ),
+          ],
         ),
         FutureBuilder<List<Project>>(
             future: projects,
@@ -89,5 +140,19 @@ class _ProjectsPageState extends State<ProjectsPage> {
     var list = jsonDecode(response.body) as List;
     List<Project> projectList = list.map((i) => Project.fromJson(i)).toList();
     return projectList;
+  }
+
+  List<String> getAllTags(List<Project> projects) {
+    List<String> tagList = List<String>.empty(growable: true);
+    for (int i = 0; i < projects.length; i++) {
+      log('list: ' + projects[i].toString());
+      if (projects[i].tagList.isNotEmpty) {
+        for (int j = 0; j < projects[i].tagList.length; j++) {
+          tagList.add(projects[i].tagList[j].name);
+        }
+      }
+    }
+    log(tagList.toString());
+    return tagList;
   }
 }

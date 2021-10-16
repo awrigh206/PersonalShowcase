@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
-import 'package:showcase/Routes/SingleImageRoute.dart';
 import 'package:showcase/Widgets/ImageDisplay.dart';
 import 'package:transparent_image/transparent_image.dart';
 

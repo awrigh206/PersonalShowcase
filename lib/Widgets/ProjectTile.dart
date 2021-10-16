@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Routes/SingleProjectRoute.dart';
+import 'dart:html' as html;
 
 class ProjectTile extends StatelessWidget {
   const ProjectTile({
@@ -12,6 +13,7 @@ class ProjectTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
     NetworkImage mainImage = NetworkImage(project.images.first.route);
     if (project.images.isEmpty) {
       return ListTile(
@@ -27,7 +29,9 @@ class ProjectTile extends StatelessWidget {
       );
     } else {
       return Builder(builder: (context) {
-        if (project.tagList.isNotEmpty) {
+        if (project.tagList.isNotEmpty &&
+            !userAgent.contains('android') &&
+            !userAgent.contains('ios')) {
           return ListTile(
             title: Text(project.title),
             leading: Hero(

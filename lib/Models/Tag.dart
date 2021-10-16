@@ -9,4 +9,9 @@ class Tag {
         weighting = json['weighting'];
 
   Map<String, dynamic> toJson() => {'name': name, 'weighting': weighting};
+
+  @override
+  String toString() {
+    return name;
+  }
 }
