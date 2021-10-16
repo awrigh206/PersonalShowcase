@@ -20,7 +20,7 @@ class ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<ProjectsPage> {
   TextEditingController controller = TextEditingController();
   String searchText = '';
-  String dropdownValue = 'Java';
+  String dropdownValue = 'Select a Tag';
 
   @override
   void dispose() {
@@ -63,11 +63,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         if (snapshot.hasData) {
                           List<String> availableTags = getAllTags(realProjects);
                           return DropdownButton<String>(
+                            hint: Text(
+                                'Select a tag to show only projects with that tag'),
                             value: dropdownValue,
                             icon: const Icon(Icons.arrow_downward),
-                            iconSize: 24,
+                            iconSize: 32,
                             elevation: 16,
-                            style: const TextStyle(color: Colors.blueAccent),
+                            style: const TextStyle(
+                                color: Colors.blueAccent, fontSize: 18),
                             underline: Container(
                               height: 2,
                               color: Colors.blueAccent,
@@ -103,11 +106,17 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     shrinkWrap: true,
                     itemCount: realProjects.length,
                     itemBuilder: (context, index) {
-                      print(searchText);
-                      if (searchText.isNotEmpty &&
+                      if (dropdownValue != 'Select a Tag') {
+                        List<String> singleProjectTags =
+                            getTagsFromProject(realProjects[index]);
+                        if (singleProjectTags.contains(dropdownValue)) {
+                          return ProjectTile(project: realProjects[index]);
+                        }
+                      } else if (searchText.isNotEmpty &&
                           realProjects[index].title.contains(searchText)) {
-                        return ProjectTile(project: realProjects[index]);
                       } else if (searchText.isEmpty) {
+                        return ProjectTile(project: realProjects[index]);
+                      } else {
                         return ProjectTile(project: realProjects[index]);
                       }
                       return Container();
@@ -152,7 +161,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
         }
       }
     }
-    log(tagList.toString());
+    tagList.add("Select a Tag");
+    return tagList;
+  }
+
+  List<String> getTagsFromProject(Project project) {
+    List<String> tagList = List<String>.empty(growable: true);
+    for (int j = 0; j < project.tagList.length; j++) {
+      tagList.add(project.tagList[j].name);
+    }
     return tagList;
   }
 }
