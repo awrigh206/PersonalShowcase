@@ -60,7 +60,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       builder: (context, snapshot) {
                         List<Project> realProjects =
                             snapshot.data as List<Project>;
-                        if (snapshot.hasData) {
+                        if (snapshot.hasData &&
+                            snapshot.connectionState == ConnectionState.done) {
                           List<String> availableTags = getAllTags(realProjects);
                           return DropdownButton<String>(
                             hint: Text(
@@ -100,7 +101,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
         FutureBuilder<List<Project>>(
             future: projects,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData &&
+                  snapshot.connectionState == ConnectionState.done) {
                 List<Project> realProjects = snapshot.data as List<Project>;
                 return ListView.builder(
                     shrinkWrap: true,
