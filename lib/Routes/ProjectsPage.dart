@@ -64,10 +64,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   FutureBuilder(
                       future: projects,
                       builder: (context, snapshot) {
-                        List<Project> realProjects =
-                            snapshot.data as List<Project>;
                         if (snapshot.hasData &&
                             snapshot.connectionState == ConnectionState.done) {
+                          List<Project> realProjects =
+                              snapshot.data as List<Project>;
                           List<String> availableTags = getAllTags(realProjects);
                           return DropdownButton<String>(
                             hint: Text('Select a tag to filter'),
@@ -95,7 +95,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             }).toList(),
                           );
                         } else {
-                          return Text('Project:');
+                          return Text('Loading Tags');
                         }
                       }),
                 ],
