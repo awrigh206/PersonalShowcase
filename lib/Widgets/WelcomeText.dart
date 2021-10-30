@@ -12,6 +12,8 @@ class WelcomeText extends StatefulWidget {
   _WelcomeTextState createState() => _WelcomeTextState();
 }
 
+typedef void BoolCallback(bool game);
+
 class _WelcomeTextState extends State<WelcomeText> {
   final TextStyle animationTextStyle =
       GoogleFonts.courierPrime(fontSize: 20, color: Colors.black);
@@ -36,8 +38,14 @@ class _WelcomeTextState extends State<WelcomeText> {
           stopPauseOnTap: true,
         ),
         Divider(),
-        EmailForm(),
+        EmailForm(
+          onChange: game,
+        ),
       ],
     );
+  }
+
+  void game(bool play) {
+    print(play.toString());
   }
 }
