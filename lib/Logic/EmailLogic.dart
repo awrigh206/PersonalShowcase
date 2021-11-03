@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class EmailLogic {
   Future<void> sendEmail(Email email) async {
     Config config = GetIt.I<Config>();
-    var response = await http.post(
+    await http.post(
       Uri.parse(config.baseUrl + 'email'),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',

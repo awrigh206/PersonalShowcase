@@ -83,14 +83,14 @@ class _EmailFormState extends State<EmailForm> {
           Padding(padding: const EdgeInsets.all(10.0), child: textBodyField),
           ButtonBar(
             children: [
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   emailTextController.clear();
                   bodyTextController.clear();
                 },
                 child: Text('Cancel'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
