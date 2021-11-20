@@ -1,13 +1,13 @@
+// ignore_for_file: file_names
+import 'dart:html';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:showcase/Logic/EmailLogic.dart';
 import 'package:showcase/Models/Email.dart';
 
-import 'WelcomeText.dart';
-
 class EmailForm extends StatefulWidget {
-  final BoolCallback onChange;
+  final FunctionStringCallback onChange;
   const EmailForm({Key? key, required this.onChange}) : super(key: key);
 
   @override
@@ -66,7 +66,8 @@ class _EmailFormState extends State<EmailForm> {
           return 'Please enter some text';
         } else if (value.toLowerCase() == 'Easter-Egg'.toLowerCase()) {
           //Activate the game easter egg
-          this.widget.onChange(true);
+          this.widget.onChange(value);
+          return 'Found the egg!';
         }
         return null;
       },
