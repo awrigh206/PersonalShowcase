@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -8,7 +10,6 @@ import 'package:showcase/Models/Project.dart';
 import 'package:http/http.dart' as http;
 import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/ProjectTile.dart';
-import 'dart:html' as html;
 
 class ProjectsPage extends StatefulWidget {
   ProjectsPage({Key? key}) : super(key: key);
@@ -37,8 +38,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-
     Widget focus = Column(
       children: [
         Row(

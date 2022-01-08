@@ -1,14 +1,14 @@
+// ignore_for_file: file_names
+import 'dart:html';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:showcase/Logic/EmailLogic.dart';
 import 'package:showcase/Models/Email.dart';
 
 class EmailForm extends StatefulWidget {
-  const EmailForm({
-    Key? key,
-  }) : super(key: key);
+  final FunctionStringCallback onChange;
+  const EmailForm({Key? key, required this.onChange}) : super(key: key);
 
   @override
   _EmailFormState createState() => _EmailFormState();
@@ -31,7 +31,6 @@ class _EmailFormState extends State<EmailForm> {
   Widget build(BuildContext context) {
     EmailLogic logic = EmailLogic();
     Future<LottieComposition> animationComposite = logic.fetchAnimation();
-    TextStyle normalStyle = GoogleFonts.ubuntu(fontSize: 20);
 
     TextFormField emailField = TextFormField(
       controller: emailTextController,
@@ -65,6 +64,10 @@ class _EmailFormState extends State<EmailForm> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
+        } else if (value.toLowerCase() == 'Easter-Egg'.toLowerCase()) {
+          //Activate the game easter egg
+          this.widget.onChange(value);
+          return 'Found the egg!';
         }
         return null;
       },
@@ -81,14 +84,14 @@ class _EmailFormState extends State<EmailForm> {
           Padding(padding: const EdgeInsets.all(10.0), child: textBodyField),
           ButtonBar(
             children: [
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   emailTextController.clear();
                   bodyTextController.clear();
                 },
                 child: Text('Cancel'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
