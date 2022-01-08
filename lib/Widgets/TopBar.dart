@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Logic/BarLogic.dart';
 import 'package:showcase/main.dart';
 
+// ignore: file_names
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
-  TopBar({Key? key}) : super(key: key);
+  const TopBar({Key? key}) : super(key: key);
 
   @override
   _TopBarState createState() => _TopBarState();

@@ -12,7 +12,7 @@ import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/ProjectTile.dart';
 
 class ProjectsPage extends StatefulWidget {
-  ProjectsPage({Key? key}) : super(key: key);
+  const ProjectsPage({Key? key}) : super(key: key);
 
   @override
   _ProjectsPageState createState() => _ProjectsPageState();
@@ -45,7 +45,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             Expanded(
               child: TextField(
                 controller: controller,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                     hintText: 'Search',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0))),
@@ -69,7 +69,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                               snapshot.data as List<Project>;
                           List<String> availableTags = getAllTags(realProjects);
                           return DropdownButton<String>(
-                            hint: Text('Select a tag to filter'),
+                            hint: const Text('Select a tag to filter'),
                             value: dropdownValue,
                             icon: const Icon(Icons.arrow_downward),
                             iconSize: 32,
@@ -94,7 +94,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             }).toList(),
                           );
                         } else {
-                          return Text('Loading Tags');
+                          return const Text('Loading Tags');
                         }
                       }),
                 ],

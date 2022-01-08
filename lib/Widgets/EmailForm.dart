@@ -36,7 +36,7 @@ class _EmailFormState extends State<EmailForm> {
       controller: emailTextController,
       maxLength: 50,
       expands: false,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         prefixIcon: Icon(Icons.email_sharp),
         border: UnderlineInputBorder(),
         labelText: 'Enter your email address',
@@ -56,7 +56,7 @@ class _EmailFormState extends State<EmailForm> {
       maxLength: 500,
       minLines: 10,
       maxLines: 40,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         prefixIcon: Icon(Icons.textsms),
         border: UnderlineInputBorder(),
         labelText: 'Please enter your message',
@@ -66,7 +66,7 @@ class _EmailFormState extends State<EmailForm> {
           return 'Please enter some text';
         } else if (value.toLowerCase() == 'Easter-Egg'.toLowerCase()) {
           //Activate the game easter egg
-          this.widget.onChange(value);
+          widget.onChange(value);
           return 'Found the egg!';
         }
         return null;
@@ -89,7 +89,7 @@ class _EmailFormState extends State<EmailForm> {
                   emailTextController.clear();
                   bodyTextController.clear();
                 },
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -98,13 +98,13 @@ class _EmailFormState extends State<EmailForm> {
                       SnackBar(
                           content: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.send,
                             color: Colors.white,
                           ),
-                          Padding(
+                          const Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('Sending Email!'),
+                            child: const Text('Sending Email!'),
                           ),
                         ],
                       )),
@@ -121,7 +121,7 @@ class _EmailFormState extends State<EmailForm> {
                     logic.sendEmail(email);
                   }
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),

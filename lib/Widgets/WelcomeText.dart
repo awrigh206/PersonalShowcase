@@ -33,7 +33,7 @@ class _WelcomeTextState extends State<WelcomeText> {
               TypewriterAnimatedText(
                   "Welcome to my personal website. This website contains information detailing previous projects that I have worked on. Feel free to explore my previous work and send me an email via the form below if you wish to get in touch.",
                   textStyle: animationTextStyle,
-                  speed: Duration(milliseconds: 100)),
+                  speed: const Duration(milliseconds: 100)),
             ],
             totalRepeatCount: 1,
             pause: const Duration(milliseconds: 1000),
@@ -52,7 +52,6 @@ class _WelcomeTextState extends State<WelcomeText> {
   }
 
   void game(String text) {
-    print(text);
     setState(() {
       run = true;
     });
