@@ -119,7 +119,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           return ProjectTile(project: realProjects[index]);
                         }
                       } else if (searchText.isNotEmpty &&
-                          realProjects[index].title.contains(searchText)) {
+                          realProjects[index]
+                              .title
+                              .toLowerCase()
+                              .contains(searchText.toLowerCase())) {
                         return ProjectTile(project: realProjects[index]);
                       } else if (searchText.isEmpty) {
                         return ProjectTile(project: realProjects[index]);
