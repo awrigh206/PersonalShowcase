@@ -164,7 +164,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
       log('list: ' + projects[i].toString());
       if (projects[i].tagList.isNotEmpty) {
         for (int j = 0; j < projects[i].tagList.length; j++) {
-          tagList.add(projects[i].tagList[j].name);
+          if (!tagList.contains(projects[i].tagList[j].name)) {
+            tagList.add(projects[i].tagList[j].name);
+          }
         }
       }
     }
