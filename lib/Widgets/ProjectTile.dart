@@ -48,8 +48,11 @@ class ProjectTile extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: RaisedButton(
-                        color: Colors.blueAccent,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.blueAccent),
+                        ),
                         onPressed: () {},
                         child: Text(
                           project.tagList[index].name,
