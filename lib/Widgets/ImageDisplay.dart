@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Routes/SingleImageRoute.dart';
 
 class ImageDisplay extends StatefulWidget {
-  ImageDisplay({Key? key, required this.currentImage, required this.index})
+  const ImageDisplay(
+      {Key? key, required this.currentImage, required this.index})
       : super(key: key);
   final FadeInImage currentImage;
   final int index;

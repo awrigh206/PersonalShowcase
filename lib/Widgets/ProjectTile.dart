@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Routes/SingleProjectRoute.dart';
@@ -18,7 +19,7 @@ class ProjectTile extends StatelessWidget {
     if (project.images.isEmpty) {
       return ListTile(
         title: Text(project.title),
-        leading: CircleAvatar(),
+        leading: const CircleAvatar(),
         onTap: () {
           Navigator.push(
               context,
@@ -56,7 +57,7 @@ class ProjectTile extends StatelessWidget {
                         onPressed: () {},
                         child: Text(
                           project.tagList[index].name,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         )),
                   );
                 }),
