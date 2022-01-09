@@ -18,6 +18,8 @@ class ProjectsPage extends StatefulWidget {
   _ProjectsPageState createState() => _ProjectsPageState();
 }
 
+typedef void StringCallback(String tag);
+
 class _ProjectsPageState extends State<ProjectsPage> {
   TextEditingController controller = TextEditingController();
   String searchText = '';
@@ -116,16 +118,25 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         List<String> singleProjectTags =
                             getTagsFromProject(realProjects[index]);
                         if (singleProjectTags.contains(dropdownValue)) {
-                          return ProjectTile(project: realProjects[index]);
+                          return ProjectTile(
+                            project: realProjects[index],
+                            onChange: tagChange,
+                          );
                         }
                       } else if (searchText.isNotEmpty &&
                           realProjects[index]
                               .title
                               .toLowerCase()
                               .contains(searchText.toLowerCase())) {
-                        return ProjectTile(project: realProjects[index]);
+                        return ProjectTile(
+                          project: realProjects[index],
+                          onChange: tagChange,
+                        );
                       } else if (searchText.isEmpty) {
-                        return ProjectTile(project: realProjects[index]);
+                        return ProjectTile(
+                          project: realProjects[index],
+                          onChange: tagChange,
+                        );
                       } else {
                         return Container();
                       }
@@ -135,10 +146,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 return ListTile(
                   title: Text(snapshot.error.toString()),
                   subtitle: Text(snapshot.error.runtimeType.toString()),
-                  leading: Icon(Icons.error),
+                  leading: const Icon(Icons.error),
                 );
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             }),
       ],
@@ -183,5 +194,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
       tagList.add(project.tagList[j].name);
     }
     return tagList;
+  }
+
+  void tagChange(String text) {
+    setState(() {
+      print("It does a thing: " + text);
+      dropdownValue = text;
+    });
   }
 }
