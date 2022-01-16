@@ -12,11 +12,13 @@ import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/ProjectTile.dart';
 
 class ProjectsPage extends StatefulWidget {
-  ProjectsPage({Key? key}) : super(key: key);
+  const ProjectsPage({Key? key}) : super(key: key);
 
   @override
   _ProjectsPageState createState() => _ProjectsPageState();
 }
+
+typedef void StringCallback(String tag);
 
 class _ProjectsPageState extends State<ProjectsPage> {
   TextEditingController controller = TextEditingController();
@@ -45,7 +47,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             Expanded(
               child: TextField(
                 controller: controller,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                     hintText: 'Search',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0))),
@@ -69,7 +71,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                               snapshot.data as List<Project>;
                           List<String> availableTags = getAllTags(realProjects);
                           return DropdownButton<String>(
-                            hint: Text('Select a tag to filter'),
+                            hint: const Text('Select a tag to filter'),
                             value: dropdownValue,
                             icon: const Icon(Icons.arrow_downward),
                             iconSize: 32,
@@ -94,7 +96,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             }).toList(),
                           );
                         } else {
-                          return Text('Loading Tags');
+                          return const Text('Loading Tags');
                         }
                       }),
                 ],
@@ -116,13 +118,25 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         List<String> singleProjectTags =
                             getTagsFromProject(realProjects[index]);
                         if (singleProjectTags.contains(dropdownValue)) {
-                          return ProjectTile(project: realProjects[index]);
+                          return ProjectTile(
+                            project: realProjects[index],
+                            onChange: tagChange,
+                          );
                         }
                       } else if (searchText.isNotEmpty &&
-                          realProjects[index].title.contains(searchText)) {
-                        return ProjectTile(project: realProjects[index]);
+                          realProjects[index]
+                              .title
+                              .toLowerCase()
+                              .contains(searchText.toLowerCase())) {
+                        return ProjectTile(
+                          project: realProjects[index],
+                          onChange: tagChange,
+                        );
                       } else if (searchText.isEmpty) {
-                        return ProjectTile(project: realProjects[index]);
+                        return ProjectTile(
+                          project: realProjects[index],
+                          onChange: tagChange,
+                        );
                       } else {
                         return Container();
                       }
@@ -132,10 +146,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 return ListTile(
                   title: Text(snapshot.error.toString()),
                   subtitle: Text(snapshot.error.runtimeType.toString()),
-                  leading: Icon(Icons.error),
+                  leading: const Icon(Icons.error),
                 );
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             }),
       ],
@@ -164,7 +178,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
       log('list: ' + projects[i].toString());
       if (projects[i].tagList.isNotEmpty) {
         for (int j = 0; j < projects[i].tagList.length; j++) {
-          tagList.add(projects[i].tagList[j].name);
+          if (!tagList.contains(projects[i].tagList[j].name)) {
+            tagList.add(projects[i].tagList[j].name);
+          }
         }
       }
     }
@@ -178,5 +194,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
       tagList.add(project.tagList[j].name);
     }
     return tagList;
+  }
+
+  void tagChange(String text) {
+    setState(() {
+      print("It does a thing: " + text);
+      dropdownValue = text;
+    });
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Widgets/ImageDisplay.dart';
@@ -66,7 +67,7 @@ class _ImageGridState extends State<ImageGrid> {
   Widget build(BuildContext context) {
     return GridView.builder(
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 450,
             childAspectRatio: 1,
             crossAxisSpacing: 15,

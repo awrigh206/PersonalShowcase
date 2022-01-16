@@ -1,12 +1,17 @@
+// ignore_for_file: file_names
+import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:showcase/Models/Project.dart';
 import 'package:showcase/Routes/SingleProjectRoute.dart';
 import 'dart:html' as html;
 
 class ProjectTile extends StatelessWidget {
+  final FunctionStringCallback onChange;
+
   const ProjectTile({
     Key? key,
     required this.project,
+    required this.onChange,
   }) : super(key: key);
 
   final Project project;
@@ -18,7 +23,7 @@ class ProjectTile extends StatelessWidget {
     if (project.images.isEmpty) {
       return ListTile(
         title: Text(project.title),
-        leading: CircleAvatar(),
+        leading: const CircleAvatar(),
         onTap: () {
           Navigator.push(
               context,
@@ -53,10 +58,12 @@ class ProjectTile extends StatelessWidget {
                           backgroundColor: MaterialStateProperty.all<Color>(
                               Colors.blueAccent),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          onChange.call(project.tagList[index].name);
+                        },
                         child: Text(
                           project.tagList[index].name,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         )),
                   );
                 }),

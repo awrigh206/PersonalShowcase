@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Logic/BarLogic.dart';
 
@@ -12,42 +13,42 @@ class SideDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             child: Text('Showcase'),
           ),
           ListTile(
-            title: Text('Home'),
+            title: const Text('Home'),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => MyHomePage()));
             },
-            leading: Icon(Icons.home),
+            leading: const Icon(Icons.home),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text('Honours'),
+            title: const Text('Honours'),
             onTap: () {
               logic.navigateToHonours(context);
             },
-            leading: Icon(Icons.label_important),
+            leading: const Icon(Icons.label_important),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text('Projects'),
+            title: const Text('Projects'),
             onTap: () {
               logic.getProjects(context);
             },
             leading: Icon(Icons.work),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text('CV'),
+            title: const Text('CV'),
             onTap: () {
               logic.getPdf();
             },
-            leading: Icon(Icons.work),
+            leading: const Icon(Icons.work),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );
