@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ class BarLogic {
 
   Future<Project> getHonours() async {
     Config config = GetIt.I<Config>();
-    var url = Uri.parse(config.baseUrl + 'project/find?title=Honours');
+    var url = Uri.parse(config.baseUrl + 'project/find?title=Running Mate');
     var response = await http.get(
       url,
       headers: {
@@ -36,7 +37,7 @@ class BarLogic {
 
   void getProjects(var context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ProjectsPage()));
+        context, MaterialPageRoute(builder: (context) => const ProjectsPage()));
   }
 
   Future<void> navigateToHonours(var context) async {
