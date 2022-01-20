@@ -1,6 +1,8 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Helpers/HttpHelper.dart';
 import 'package:showcase/Models/Project.dart';
+import 'package:showcase/Widgets/AsyncCommitDisplay.dart';
 import 'package:showcase/Widgets/AsyncMarkdownDisplay.dart';
 import 'package:showcase/Widgets/BarBuilder.dart';
 import 'package:showcase/Widgets/Gallery.dart';
@@ -55,6 +57,7 @@ class SingleProjectRoute extends StatelessWidget {
                     return Container();
                   }
                 }),
+            AsyncCommitDisplay(project: project),
           ]))
         ]);
 

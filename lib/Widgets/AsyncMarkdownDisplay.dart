@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -23,7 +25,7 @@ class AsyncMarkdownDisplay extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return Text("Error: " + snapshot.error.toString());
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             }),
       ),
