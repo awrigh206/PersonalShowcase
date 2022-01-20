@@ -27,7 +27,31 @@ class AsyncCommitDisplay extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Commit> commitList = snapshot.data as List<Commit>;
-                return Text('Got commit: ' + commitList[0].message);
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListView.builder(
+                      itemCount: commitList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: Text(commitList[index].name),
+                          title: Text(commitList[index].message),
+                          subtitle: Text(commitList[index].date),
+                          trailing: Builder(
+                            builder: (context) {
+                              if (commitList[index]
+                                  .message
+                                  .toLowerCase()
+                                  .contains('merge')) {
+                                return const Icon(Icons.merge_type);
+                              } else {
+                                return const Icon(Icons.comment_outlined);
+                              }
+                            },
+                          ),
+                        );
+                      }),
+                );
               } else if (snapshot.hasError) {
                 return Text("Error: " + snapshot.error.toString());
               } else {
