@@ -198,7 +198,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   void tagChange(String text) {
     setState(() {
-      print("It does a thing: " + text);
       dropdownValue = text;
     });
   }
