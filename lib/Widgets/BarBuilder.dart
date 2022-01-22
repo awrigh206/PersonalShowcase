@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Widgets/Background.dart';
 import 'package:showcase/Widgets/WaveWidget.dart';
@@ -23,7 +24,7 @@ class BarBuilder extends StatelessWidget {
           child: Center(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: this.focusWidget,
+            child: focusWidget,
           )),
         );
 
@@ -32,14 +33,16 @@ class BarBuilder extends StatelessWidget {
           child: Center(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: this.focusWidget,
+            child: focusWidget,
           )),
         );
 
-        if (userAgent.contains("android") || userAgent.contains("ios")) {
+        if (userAgent.contains("android") ||
+            userAgent.contains("ios") ||
+            userAgent.toLowerCase().contains("iphone")) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Showcase'),
+              title: const Text('Showcase'),
               actions: [],
             ),
             body: noMarginBody,
@@ -47,7 +50,7 @@ class BarBuilder extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            appBar: WaveWidget(focusWidget: TopBar()),
+            appBar: const WaveWidget(focusWidget: TopBar()),
             body: Builder(builder: (context) {
               if (screenSize.width < 900.0) {
                 return mainBody;

@@ -1,10 +1,10 @@
+// ignore_for_file: file_names
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:showcase/Logic/BarLogic.dart';
 import 'package:showcase/main.dart';
 
-// ignore: file_names
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   const TopBar({Key? key}) : super(key: key);
 
@@ -13,7 +13,7 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
-    return Size.fromHeight(60.0);
+    return const Size.fromHeight(60.0);
   }
 }
 
@@ -70,7 +70,7 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
           children: [
             InkWell(
               child: Text('Andrew Wright - Showcase',
-                  style: TextStyle(color: this.color, fontSize: this.textSize)),
+                  style: TextStyle(color: color, fontSize: textSize)),
               onHover: (value) {
                 if (value) {
                   controller.forward();
@@ -79,8 +79,10 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
                 }
               },
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyHomePage()));
               },
             ),
             Expanded(

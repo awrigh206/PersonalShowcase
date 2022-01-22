@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 
 class MobileAppBar extends StatefulWidget {
@@ -12,7 +13,7 @@ class _MobileAppBarState extends State<MobileAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       actions: [],
-      title: Text('Showcase'),
+      title: const Text('Showcase'),
     );
   }
 }

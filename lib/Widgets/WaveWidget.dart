@@ -1,8 +1,9 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:showcase/Helpers/WaveClipper.dart';
 
 class WaveWidget extends StatefulWidget implements PreferredSizeWidget {
-  WaveWidget({Key? key, required this.focusWidget}) : super(key: key);
+  const WaveWidget({Key? key, required this.focusWidget}) : super(key: key);
   final Widget focusWidget;
 
   @override
@@ -10,7 +11,7 @@ class WaveWidget extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
-    return Size.fromHeight(150.0);
+    return const Size.fromHeight(150.0);
   }
 }
 
@@ -68,7 +69,7 @@ class _WaveWidgetState extends State<WaveWidget>
             Opacity(
               opacity: 0.1,
               child: Container(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             Opacity(
@@ -76,7 +77,7 @@ class _WaveWidgetState extends State<WaveWidget>
               child: ClipPath(
                 clipper: WaveClipper(value, heightValue),
                 child: Container(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   height: 150,
                 ),
               ),
@@ -84,7 +85,7 @@ class _WaveWidgetState extends State<WaveWidget>
             ClipPath(
                 clipper: WaveClipper(waveAnimation.value, heightValue),
                 child: Container(
-                  padding: EdgeInsets.only(bottom: 50),
+                  padding: const EdgeInsets.only(bottom: 50),
                   color: Theme.of(context).primaryColor,
                   height: 125,
                   alignment: Alignment.center,

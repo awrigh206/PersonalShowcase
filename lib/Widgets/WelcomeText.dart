@@ -6,7 +6,7 @@ import 'package:showcase/Widgets/GameWidget.dart';
 import 'EmailForm.dart';
 
 class WelcomeText extends StatefulWidget {
-  WelcomeText({
+  const WelcomeText({
     Key? key,
   }) : super(key: key);
 
@@ -40,7 +40,7 @@ class _WelcomeTextState extends State<WelcomeText> {
             displayFullTextOnTap: true,
             stopPauseOnTap: true,
           ),
-          Divider(),
+          const Divider(),
           EmailForm(
             onChange: game,
           ),
