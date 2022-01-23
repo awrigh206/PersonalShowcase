@@ -7,6 +7,7 @@ import 'package:flame/game.dart';
 class TetrisGame extends FlameGame {
   late Size screenSize;
 
+  @override
   void render(Canvas canvas) {
     Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
     Paint bgPaint = Paint();
@@ -14,6 +15,7 @@ class TetrisGame extends FlameGame {
     canvas.drawRect(bgRect, bgPaint);
   }
 
+  @override
   void update(double t) {}
 
   void resize(Size size) {

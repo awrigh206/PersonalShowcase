@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:get_it/get_it.dart';
 import 'package:showcase/Configuration/Config.dart';
 

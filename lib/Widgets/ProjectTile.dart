@@ -35,8 +35,9 @@ class ProjectTile extends StatelessWidget {
     } else {
       return Builder(builder: (context) {
         if (project.tagList.isNotEmpty &&
-            !userAgent.contains('android') &&
-            !userAgent.contains('ios')) {
+                !userAgent.contains('android') &&
+                !userAgent.contains('ios') ||
+            userAgent.toLowerCase().contains("iphone")) {
           return ListTile(
             title: Text(project.title),
             leading: Hero(

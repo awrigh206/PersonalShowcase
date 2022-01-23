@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:showcase/Models/Image.dart';
 import 'package:showcase/Models/Tag.dart';
 
