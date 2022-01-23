@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AsyncMarkdownDisplay extends StatelessWidget {
   final Future<String> textFuture;
@@ -21,7 +22,13 @@ class AsyncMarkdownDisplay extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 String text = snapshot.data as String;
-                return Markdown(shrinkWrap: true, data: text);
+                return Markdown(
+                  shrinkWrap: true,
+                  data: text,
+                  onTapLink: (text, href, title) async {
+                    await launch(text);
+                  },
+                );
               } else if (snapshot.hasError) {
                 return Text("Error: " + snapshot.error.toString());
               } else {
